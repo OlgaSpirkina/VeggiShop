@@ -1,3 +1,4 @@
+// Création du prototype contenant les attributs
 function Products(name, pricePerKilo, season, healthBenefits=[], country, img){
   this.name = name;
   this.pricePerKilo = pricePerKilo;
@@ -6,15 +7,16 @@ function Products(name, pricePerKilo, season, healthBenefits=[], country, img){
   this.country = country;
   this.img = img;
 };
+// les methodes du prototype est crée à part
 Products.prototype.goodForHealth = function(){
   let allBenefits = '';
   this.healthBenefits.forEach((item, i) => {
     i == (this.healthBenefits.length - 1) ? allBenefits += item+'.' : allBenefits += item +', ';
 
   })
-  //document.getElementById(`good-for-health_${this.name}`) += allBenefits;
   return allBenefits;
 }
+// La methode principale qui affiche les cartes et appelle une autre methode pour afficher les bénéfices pour la santé
 Products.prototype.displayCards = function(){
   const displayEveryProduct =
    `
@@ -57,6 +59,7 @@ Fruits.prototype.countSugar = function(){
     return document.getElementById(`sugar_${this.name}`).innerHTML += howMuchSugar;
   }
 }
+// Pour afficher les info supplementaire sur le click du bouton
 Fruits.prototype.displaySugarInfo = function(elem){
   document.getElementById(`btn_${elem}`).addEventListener("click", function(){
     console.log(document.getElementById(`btn_${elem}`));
@@ -75,6 +78,10 @@ Legums.prototype.cookIt = function(){
   this.cookingTime > 30 ? timeOfCooking = 'Soyez pas pressés! le temps de préparation de ' + this.name + ' est long: ' + this.cookingTime + ' min' : timeOfCooking = this.name + ' se cuit en '+ this.cookingTime + ' min';
   return timeOfCooking;
 }
+
+
+// Création des instances
+
 const cucomber = new Products('Concombre', '2,5 euros', 'l\'été', ['les intestins', 'le sang', 'le coeur'], 'France', 'assets/img/cucomber.jpg');
 cucomber.displayCards();
 const peach = new Fruits('peach', '4,5euros', 'l\'été', ['gut', 'heart', 'sang'], 'France', 'assets/img/peach.jpg', 16);
