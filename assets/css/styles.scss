@@ -6,6 +6,7 @@ html {
 :root{
   --mainpurple: #825E7A;
   --mainyellow: #efab00;
+  --mainbrown: #DABEB2;
   --secondpurple: rgba(130, 126, 154, .9);
   --fonttitle: 'Archivo Black', sans-serif;
   --fonttext: 'Roboto', sans-serif;
@@ -13,6 +14,16 @@ html {
 body{
   font-family: var(--fonttext);
 }
-// .card-text2{
-//   display: none;
-// }
+.fa-shopping-cart{
+  color: var(--mainbrown);
+  &:hover{
+    color: lighten(#DABEB2, 7%);
+    scale: 1.2;
+  }
+}
+.colored-button{
+  background-color: var(--mainbrown);
+}
+.shopping-cart-in-navbar{
+  visibility: hidden;
+}
