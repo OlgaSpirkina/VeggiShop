@@ -1,0 +1,20 @@
+@charset "UTF-8";
+/* l'effet de scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* création des variables des police et des couleurs */
+:root {
+  --mainpurple: #825E7A;
+  --mainyellow: #efab00;
+  --secondpurple: rgba(130, 126, 154, .9);
+  --fonttitle: "Archivo Black", sans-serif;
+  --fonttext: "Roboto", sans-serif;
+}
+
+body {
+  font-family: var(--fonttext);
+}
+
+/*# sourceMappingURL=styles.css.map */
