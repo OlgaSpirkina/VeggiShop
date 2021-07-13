@@ -1,7 +1,5 @@
-# Yummy & Healthy
-Le projet d'une page web permettant de consulter des recettes des plat équilibrés. Projet réalisé en JavaScript. Une manipulation du tableau d'objets permettant d'afficher de multiples éléments.
- 
-![grab-landing-page](https://raw.githubusercontent.com/OlgaSpirkina/healthy/main/assets/img/yummy-and-healthy.gif)  
+# VeggiShop
+Le projet d'une page web permettant de consulter et acheter les légumes, fruits et légumineuses. Projet réalisé en JavaScript avec la methode de Orienté Objet. Création d'un constructor prototype et de plusieurs constructors enfants.
 
 ## Les technologies utilisées:
 1. HTML5/CSS/SASS
