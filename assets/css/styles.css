@@ -18,6 +18,7 @@ body {
   font-family: var(--fonttext);
 }
 
+/* l'image du fond pour les sections à propos et contact-area */
 .fa-shopping-cart {
   color: var(--mainbrown);
 }
@@ -32,6 +33,40 @@ body {
 
 .shopping-cart-in-navbar {
   visibility: hidden;
+}
+
+.legums {
+  display: none;
+}
+
+/* la barre de recherche: input #searchBar et icone de recherche */
+#searchBar {
+  height: 3rem;
+  border: 1px solid var(--mainpurple);
+  border-radius: 1rem;
+}
+#searchBar:focus {
+  outline: none;
+}
+
+label,
+input,
+.icon {
+  width: 30vw;
+}
+
+label {
+  font-family: var(--fonttitle);
+  font-size: 1.5rem;
+}
+
+.fa-search {
+  position: relative;
+  font-size: 1.5rem;
+  z-index: 1;
+  top: 3.4rem;
+  padding-right: 0.5rem;
+  color: var(--mainpurple);
 }
 
 /*# sourceMappingURL=styles.css.map */
