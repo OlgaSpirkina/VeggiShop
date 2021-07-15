@@ -7,6 +7,7 @@ html {
   --mainpurple: #825E7A;
   --mainyellow: #efab00;
   --mainbrown: #DABEB2;
+  --greenbtn: #9DCC88;
   --secondpurple: rgba(130, 126, 154, .9);
   --fonttitle: 'Archivo Black', sans-serif;
   --fonttext: 'Roboto', sans-serif;
@@ -15,21 +16,21 @@ body{
   font-family: var(--fonttext);
 }
 /* l'image du fond pour les sections à propos et contact-area */
-// #banner{
-//   background-image: url("../img/bannerveggie.jpg");
-// }
-// #lowerBanner{
-//   background-image: url("../img/banner.jpg");
-// }
+#banner{
+  background-image: url("../img/bannerveggie.jpg");
+}
+#lowerBanner{
+  background-image: url("../img/banner.jpg");
+}
 // /* l'effet paralax pour deux images */
-// #lowerBanner,
-// #banner{
-//   min-height: 700px;
-//   background-attachment: fixed;
-//   background-position: center;
-//   background-repeat: no-repeat;
-//   background-size: cover;
-// }
+#lowerBanner,
+#banner{
+  min-height: 700px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .fa-shopping-cart{
   color: var(--mainbrown);
@@ -40,6 +41,10 @@ body{
 }
 .colored-button{
   background-color: var(--mainbrown);
+}
+.btn-maingreen{
+  background-color: var(--greenbtn);
+  border-radius: 2rem;
 }
 .shopping-cart-in-navbar{
   visibility: hidden;
