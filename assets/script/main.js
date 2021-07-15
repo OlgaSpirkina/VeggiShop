@@ -100,3 +100,39 @@ const displayProductsAsCards = (anyArr) =>{
   document.getElementById('placeForCards').innerHTML = result;
 }
 displayProductsAsCards(arrOfProducts);
+
+
+// Au click sur le panier d'achat de chaque article:
+  // -le prix est récupéré dans le tableau arrForPrices,
+  // -le panier de la navbar est visible,
+  // -le compteur du panier sur la navbar est activé
+const arrForPrices = [];
+function countShopping(){
+  let counter = 1;
+  let addShoppingCart = document.getElementsByClassName('add-shopping');
+  let priceValue = document.getElementsByClassName('priceValue');
+  for(let i=0; i<addShoppingCart.length; i++){
+    addShoppingCart[i].addEventListener('click', function(){
+      addShoppingCart[i].classList.add('price_'+i);
+      priceValue[i].classList.add('price_'+i);
+      document.getElementById('number-of-items').style.visibility = 'visible';
+      document.getElementById('number-of-items').innerHTML = counter++;
+      if(addShoppingCart[i].classList.contains('price_'+i) && priceValue[i].classList.contains('price_'+i)){
+        arrForPrices.push(parseFloat(priceValue[i].innerHTML, 10));
+        displayPrices();
+        return arrForPrices;
+      }
+    });
+  }
+
+}
+// la somme des prix de tout les articles
+const displayPrices = () =>{
+  let sum = '';
+  sum += arrForPrices.reduce((a, b) => a + b, 0);
+  console.log(sum);
+  return sum;
+}
+for(let i=0; i<arrOfProducts.length; i++){
+  countShopping();
+}
