@@ -166,11 +166,11 @@ for(let i=0; i<arrOfProducts.length; i++){
 }
 // Le bouton voir plus voir moins
 const btnSeeMore = document.getElementById('btn-see-more');
-const legumsClass = document.getElementsByClassName('legumsClass');
+const legumsClass = document.getElementsByClassName('legums');
 btnSeeMore.addEventListener('click', function(e){
   btnSeeMore.innerHTML = (btnSeeMore.innerHTML == 'Voir Moins') ? 'Voir Plus...' : 'Voir Moins';
   for(let i=0; i< legumsClass.length; i++){
-  legumsClass[i].style.display = (legumsClass[i].style.display == 'block') ? 'none' : 'block';
+  legumsClass[i].style.display = (legumsClass[i].style.display == 'none') ? 'block' : 'none';
   }
 })
 
@@ -178,7 +178,7 @@ const divForButtons = document.getElementById('placeForButtons');
 const vegetables = document.createElement('button');
 const fruits = document.createElement('button');
 const legums = document.createElement('button');
-
+const allProducts = document.createElement('button');
 function setAttributes(el, options) {
    Object.keys(options).forEach(function(attr) {
      el.setAttribute(attr, options[attr]);
@@ -193,8 +193,29 @@ addText('Légumes', vegetables);
 setAttributes(fruits, {"class": "btn text-white btn-maingreen categories", "type": "button", "name": "fruits", "id": "fruits"});
 addText('Fruits', fruits);
 setAttributes(legums, {"class": "btn text-white btn-maingreen categories", "type": "button", "name": "legums", "id": "legums"});
-addText('Légumes', legums);
-
+addText('Légumineuses', legums);
+setAttributes(allProducts, {"class": "btn text-white btn-maingreen categories", "type": "button", "name": "allProducts", "id": "all"});
+addText('Voir tout', allProducts);
 divForButtons.appendChild(vegetables);
 divForButtons.appendChild(fruits);
 divForButtons.appendChild(legums);
+divForButtons.appendChild(allProducts);
+
+let btnCategories = document.getElementsByClassName('categories');
+for(let i=0; i<btnCategories.length; i++){
+  let buttonId = btnCategories[i].id;
+  btnCategories[i].addEventListener('click', function(){
+    document.getElementById('btn-see-more').style.display = 'none';
+    for(let j=0; j<arrOfProducts.length; j++){
+      if(arrOfProducts[j].groupName == buttonId){
+        const categoryFilter = arrOfProducts.filter(eachCategory => {
+          return (eachCategory.groupName.toLowerCase().includes(buttonId));
+        });
+        displayProductsAsCards(categoryFilter);
+      }else if(buttonId == 'all'){
+        document.getElementById('btn-see-more').style.display = 'block';
+        displayProductsAsCards(arrOfProducts);
+        }
+      }
+  })
+}

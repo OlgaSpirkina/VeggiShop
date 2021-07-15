@@ -6,7 +6,7 @@ html {
 
 /* création des variables des police et des couleurs */
 :root {
-  --mainpurple: #825E7A;
+  --deepgreen: #35542A;
   --mainyellow: #efab00;
   --mainbrown: #DABEB2;
   --greenbtn: #9DCC88;
@@ -64,14 +64,10 @@ body {
   visibility: hidden;
 }
 
-.legums {
-  display: none;
-}
-
 /* la barre de recherche: input #searchBar et icone de recherche */
 #searchBar {
   height: 3rem;
-  border: 1px solid var(--mainpurple);
+  border: 1px solid var(--deepgreen);
   border-radius: 1rem;
 }
 #searchBar:focus {
@@ -95,7 +91,7 @@ label {
   z-index: 1;
   top: 3.4rem;
   padding-right: 0.5rem;
-  color: var(--mainpurple);
+  color: var(--deepgreen);
 }
 
 /*# sourceMappingURL=styles.css.map */
