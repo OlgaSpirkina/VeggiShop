@@ -54,6 +54,12 @@ body {
   border-radius: 2rem;
 }
 
+.categories {
+  width: 8rem;
+  text-align: center;
+  margin: 0 1rem;
+}
+
 .shopping-cart-in-navbar {
   visibility: hidden;
 }

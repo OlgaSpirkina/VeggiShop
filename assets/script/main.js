@@ -173,3 +173,7 @@ btnSeeMore.addEventListener('click', function(e){
   legums[i].style.display = (legums[i].style.display == 'block') ? 'none' : 'block';
   }
 })
+// // Créer les Catégories
+// <button class="btn text-white btn-maingreen categories" type="button" name="fruits">Fruits</button>
+// <button class="btn text-white btn-maingreen categories" type="button" name="vegetables">Légumes</button>
+// <button class="btn text-white btn-maingreen categories" type="button" name="legums">Légumineuses</button>
