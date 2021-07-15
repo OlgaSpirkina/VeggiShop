@@ -88,7 +88,7 @@ const displayProductsAsCards = (anyArr) =>{
             <p class="card-text">${item.country}</p>
             <p class="card-text"><strong class="priceValue mx-1">${item.pricePerKilo}</strong><i class="fas fa-euro-sign"></i></p>
             </div>
-            <p class="card-text good-for-health_${item.name}"></p>
+            <p class="card-text good-for-health_${item.name}">${item.goodForHealth()}</p>
             <p class="card-text2" id="sugar_${item.name}" style="display:none";></p>
             <p class="d-flex justify-content-between">
               <a href="#" class="btn text-white colored-button" id="btn_${item.name}">En savoir plus</a>
@@ -100,5 +100,3 @@ const displayProductsAsCards = (anyArr) =>{
   document.getElementById('placeForCards').innerHTML = result;
 }
 displayProductsAsCards(arrOfProducts);
-
-// ${item.goodForHealth()}
