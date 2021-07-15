@@ -1,3 +1,5 @@
+// la div principale
+let placeForCards = document.getElementById('placeForCards');
 // Création du prototype contenant les attributs
 function Products(groupName, name, pricePerKilo, season, healthBenefits=[], country, img){
   this.groupName = groupName;
@@ -13,7 +15,6 @@ Products.prototype.goodForHealth = function(){
   let allBenefits = '';
   this.healthBenefits.forEach((item, i) => {
     i == (this.healthBenefits.length - 1) ? allBenefits += item+'.' : allBenefits += item +', ';
-
   })
   return allBenefits;
 }
@@ -41,51 +42,6 @@ Fruits.prototype.countSugar = function(){
     return document.getElementById(`paragraphSugar_${this.name}`).innerHTML += howMuchSugar;
   }
 }
-// Pour afficher les info supplementaire sur le click du bouton
-// Fruits.prototype.displaySugarInfo = function(){
-//   let elem = this.name;
-//   document.getElementById(`btn_${elem}`).addEventListener("click", function(){
-//     document.getElementById(`sugar_${elem}`).style.display = (document.getElementById(`sugar_${elem}`).style.display == 'none') ? 'block' : 'none';
-//   });
-// }
-let placeForCards = document.getElementById('placeForCards');
-// Fruits.prototype.displaySugarInfo = function(){
-//   placeForCards.addEventListener('click', function(e){
-//     // var el = document.getElementById(`btn_${this.name}`);
-//     var el = e.target
-//     // walk up the tree until we find a LI item
-//     while (el && el.tagName !== 'button') {
-//        el = el.parentNode
-//     }
-//     for(let i=0; i<el.length; i++){
-//       document.getElementById(`sugar_${this.name}`).style.display = (document.getElementById(`sugar_${this.name}`).style.display == 'none') ? 'block' : 'none';
-//       console.log('item clicked', el)
-//     }
-//   }, false)
-// }
-window.addEventListener('load', function () {
-Fruits.prototype.displaySugarInfo = function(){
-placeForCards.onclick = function(event) {
-  let buttonSugar = event.target.closest('button');
-  console.log(buttonSugar);
-  console.log(document.getElementById(`paragraphSugar_${this.name}`));
-    if(!buttonSugar){
-      return;
-    }else if(!placeForCards.contains(buttonSugar)){
-      return;
-    }else if(buttonSugar.classList.contains(`sugars_${this.name}`)){
-      document.getElementById(`paragraphSugar_${this.name}`).style.display = (document.getElementById(`paragraphSugar_${this.name}`).style.display == 'none') ? 'block' : 'none';
-      return;
-    }
-  }
-}
-})
-
-
-
-
-
-
 // Création du constructor Legums (Légumineuses)
 function Legums(groupName, name, pricePerKilo, season, healthBenefits=[], country, img, cookingTime){
   Products.call(this, groupName, name, pricePerKilo, season, healthBenefits, country, img);
@@ -143,9 +99,9 @@ const displayProductsAsCards = (anyArr) =>{
             <p class="card-text"><strong class="priceValue mx-1">${item.pricePerKilo}</strong><i class="fas fa-euro-sign"></i></p>
             </div>
             <p class="card-text good-for-health_${item.name}">${item.goodForHealth()}</p>
-            <p class="card-text2" id="paragraphSugar_${item.name}" style="display:none";></p>
+            <p class="card-text2 ${item.name}" id="paragraphSugar_${item.name}" style="display:none";></p>
             <p class="d-flex justify-content-between">
-              <button class="btn text-white colored-button sugars_${item.name}" id="btn_${item.name}">En savoir plus</button>
+              <button class="btn text-white colored-button ${item.name}" id="btn_${item.name}">En savoir plus</button>
               <i class="fas fa-2x fa-shopping-cart add-shopping"></i>
             </p>
         </div>
@@ -189,10 +145,10 @@ window.addEventListener('load', function () {
     countShopping();
     if(arrOfProducts[i].groupName == 'fruits'){
       arrOfProducts[i].countSugar();
-      arrOfProducts[i].displaySugarInfo();
+      // displaySugarInfo(arrOfProducts[i].name);
     }
   }
-})  
+})
 // Le bouton voir plus voir moins
 const btnSeeMore = document.getElementById('btn-see-more');
 const legumsClass = document.getElementsByClassName('legums');
@@ -247,4 +203,21 @@ for(let i=0; i<btnCategories.length; i++){
         }
       }
   })
+}
+// la fonction qui permet de montrer les info sur le taut de sucre. Le calcule du taut de sucre
+// se fait dans la fonction prototype, mais l'affichage avec un event listener du parent global la div #placeForCards
+placeForCards.onclick = function(event) {
+  let buttonSugar = event.target.closest('button');
+  console.log(buttonSugar);
+    if(!buttonSugar){
+      return;
+    }else if(!placeForCards.contains(buttonSugar)){
+      return;
+    }else{
+      for(let i=0; i<arrOfProducts.length; i++){
+        if(buttonSugar.classList.contains(`${arrOfProducts[i].name}`) && document.getElementById(`paragraphSugar_${arrOfProducts[i].name}`).classList.contains(`${arrOfProducts[i].name}`)){
+        document.getElementById(`paragraphSugar_${arrOfProducts[i].name}`).style.display = (document.getElementById(`paragraphSugar_${arrOfProducts[i].name}`).style.display == 'none') ? 'block' : 'none';
+      }
+    }
+  }
 }
