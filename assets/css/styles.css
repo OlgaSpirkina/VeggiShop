@@ -12,11 +12,18 @@ html {
   --greenbtn: #9DCC88;
   --secondpurple: rgba(130, 126, 154, .9);
   --fonttitle: "Archivo Black", sans-serif;
-  --fonttext: "Roboto", sans-serif;
+  --fonttext: "family=Roboto", sans-serif;
+  --fontnavbar: "Merienda One", cursive;
 }
 
 body {
   font-family: var(--fonttext);
+}
+
+.nav-link {
+  font-family: var(--fontnavbar);
+  font-size: 2rem;
+  margin: 0 3rem;
 }
 
 /* l'image du fond pour les sections à propos et contact-area */
@@ -45,6 +52,10 @@ body {
   scale: 1.2;
 }
 
+.shopping-cart-in-navbar {
+  visibility: hidden;
+}
+
 .colored-button {
   background-color: var(--mainbrown);
 }
@@ -58,10 +69,7 @@ body {
   width: 8rem;
   text-align: center;
   margin: 0 1rem;
-}
-
-.shopping-cart-in-navbar {
-  visibility: hidden;
+  padding: 0.2rem;
 }
 
 /* la barre de recherche: input #searchBar et icone de recherche */
@@ -92,6 +100,46 @@ label {
   top: 3.4rem;
   padding-right: 0.5rem;
   color: var(--deepgreen);
+}
+
+@media (min-width: 350px) and (max-width: 699px) {
+  .categories {
+    margin: 1rem;
+  }
+
+  label,
+input,
+.icon {
+    width: 90vw;
+  }
+
+  #lowerBanner,
+#banner {
+    min-height: 450px;
+  }
+
+  #btn-see-more {
+    width: 7rem;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 700px) and (max-width: 1250px) {
+  #btn-see-more {
+    width: 7rem;
+  }
+
+  label,
+input,
+.icon {
+    width: 60vw;
+  }
+
+  .nav-link {
+    font-size: 1.5rem;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

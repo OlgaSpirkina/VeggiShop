@@ -10,10 +10,17 @@ html {
   --greenbtn: #9DCC88;
   --secondpurple: rgba(130, 126, 154, .9);
   --fonttitle: 'Archivo Black', sans-serif;
-  --fonttext: 'Roboto', sans-serif;
+  --fonttext: 'family=Roboto', sans-serif;
+  --fontnavbar: 'Merienda One', cursive;
 }
 body{
   font-family: var(--fonttext);
+}
+// les liens de la navbar
+.nav-link{
+  font-family: var(--fontnavbar);
+  font-size: 2rem;
+  margin: 0 3rem;
 }
 /* l'image du fond pour les sections à propos et contact-area */
 #banner{
@@ -31,7 +38,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+// le panier: celui dans la navbar et aussi sur les cartes
 .fa-shopping-cart{
   color: var(--mainbrown);
   &:hover{
@@ -39,9 +46,14 @@ body{
     scale: 1.2;
   }
 }
+.shopping-cart-in-navbar{
+  visibility: hidden;
+}
+// les boutons sur les cartes
 .colored-button{
   background-color: var(--mainbrown);
 }
+// le bouton voir plus et les boutons des catégories sont générer avec js (ne sont pas présents en html)
 .btn-maingreen{
   background-color: var(--greenbtn);
   border-radius: 2rem;
@@ -50,11 +62,8 @@ body{
   width: 8rem;
   text-align: center;
   margin: 0 1rem;
+  padding: .2rem;
 }
-.shopping-cart-in-navbar{
-  visibility: hidden;
-}
-
 /* la barre de recherche: input #searchBar et icone de recherche */
 #searchBar{
 height: 3rem;
@@ -80,4 +89,37 @@ z-index: 1;
 top: 3.4rem;
 padding-right: .5rem;
 color: var(--deepgreen);
+}
+@media (min-width: 350px) and (max-width: 699px){
+  .categories{
+    margin: 1rem;
+  }
+  label,
+  input,
+  .icon{
+    width: 90vw;
+  }
+  #lowerBanner,
+  #banner{
+    min-height: 450px;
+  }
+  #btn-see-more{
+    width: 7rem;
+  }
+  .nav-link{
+    font-size: 1rem;
+  }
+}
+@media (min-width: 700px) and (max-width: 1250px) {
+  #btn-see-more{
+    width: 7rem;
+  }
+  label,
+  input,
+  .icon{
+    width: 60vw;
+  }
+  .nav-link{
+    font-size: 1.5rem;
+  }
 }
