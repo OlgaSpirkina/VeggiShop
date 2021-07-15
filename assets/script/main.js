@@ -166,14 +166,35 @@ for(let i=0; i<arrOfProducts.length; i++){
 }
 // Le bouton voir plus voir moins
 const btnSeeMore = document.getElementById('btn-see-more');
-const legums = document.getElementsByClassName('legums');
+const legumsClass = document.getElementsByClassName('legumsClass');
 btnSeeMore.addEventListener('click', function(e){
   btnSeeMore.innerHTML = (btnSeeMore.innerHTML == 'Voir Moins') ? 'Voir Plus...' : 'Voir Moins';
-  for(let i=0; i< legums.length; i++){
-  legums[i].style.display = (legums[i].style.display == 'block') ? 'none' : 'block';
+  for(let i=0; i< legumsClass.length; i++){
+  legumsClass[i].style.display = (legumsClass[i].style.display == 'block') ? 'none' : 'block';
   }
 })
-// // Créer les Catégories
-// <button class="btn text-white btn-maingreen categories" type="button" name="fruits">Fruits</button>
-// <button class="btn text-white btn-maingreen categories" type="button" name="vegetables">Légumes</button>
-// <button class="btn text-white btn-maingreen categories" type="button" name="legums">Légumineuses</button>
+
+const divForButtons = document.getElementById('placeForButtons');
+const vegetables = document.createElement('button');
+const fruits = document.createElement('button');
+const legums = document.createElement('button');
+
+function setAttributes(el, options) {
+   Object.keys(options).forEach(function(attr) {
+     el.setAttribute(attr, options[attr]);
+   })
+}
+const addText = (text, parent) =>{
+  let elem = document.createTextNode(text);
+  parent.appendChild(elem);
+}
+setAttributes(vegetables, {"class": "btn text-white btn-maingreen categories", "type": "button", "name": "vegetables", "id": "vegetables"});
+addText('Légumes', vegetables);
+setAttributes(fruits, {"class": "btn text-white btn-maingreen categories", "type": "button", "name": "fruits", "id": "fruits"});
+addText('Fruits', fruits);
+setAttributes(legums, {"class": "btn text-white btn-maingreen categories", "type": "button", "name": "legums", "id": "legums"});
+addText('Légumes', legums);
+
+divForButtons.appendChild(vegetables);
+divForButtons.appendChild(fruits);
+divForButtons.appendChild(legums);
