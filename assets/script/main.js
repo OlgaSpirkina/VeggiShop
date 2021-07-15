@@ -101,7 +101,7 @@ input.addEventListener('keyup', (e) => {
 
 const displayProductsAsCards = (anyArr) =>{
   const result =  anyArr.map((item) => {
-      return `<div class="card m-2" style="width: 20rem;">
+      return `<div class="card m-2 ${item.groupName}" style="width: 20rem;">
         <img class="card-img-top" src="${item.img}" alt="${item.name}">
         <div class="card-body">
           <h5 class="card-title">${item.name.toUpperCase()}</h5>
@@ -164,3 +164,12 @@ for(let i=0; i<arrOfProducts.length; i++){
     arrOfProducts[i].displaySugarInfo();
   }
 }
+// Le bouton voir plus voir moins
+const btnSeeMore = document.getElementById('btn-see-more');
+const legums = document.getElementsByClassName('legums');
+btnSeeMore.addEventListener('click', function(e){
+  btnSeeMore.innerHTML = (btnSeeMore.innerHTML == 'Voir Moins') ? 'Voir Plus...' : 'Voir Moins';
+  for(let i=0; i< legums.length; i++){
+  legums[i].style.display = (legums[i].style.display == 'block') ? 'none' : 'block';
+  }
+})
