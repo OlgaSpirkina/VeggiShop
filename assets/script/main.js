@@ -42,12 +42,48 @@ Fruits.prototype.countSugar = function(){
   }
 }
 // Pour afficher les info supplementaire sur le click du bouton
+// Fruits.prototype.displaySugarInfo = function(){
+//   let elem = this.name;
+//   document.getElementById(`btn_${elem}`).addEventListener("click", function(){
+//     document.getElementById(`sugar_${elem}`).style.display = (document.getElementById(`sugar_${elem}`).style.display == 'none') ? 'block' : 'none';
+//   });
+// }
+let placeForCards = document.getElementById('placeForCards');
+// Fruits.prototype.displaySugarInfo = function(){
+//   placeForCards.addEventListener('click', function(e){
+//     // var el = document.getElementById(`btn_${this.name}`);
+//     var el = e.target
+//     // walk up the tree until we find a LI item
+//     while (el && el.tagName !== 'button') {
+//        el = el.parentNode
+//     }
+//     for(let i=0; i<el.length; i++){
+//       document.getElementById(`sugar_${this.name}`).style.display = (document.getElementById(`sugar_${this.name}`).style.display == 'none') ? 'block' : 'none';
+//       console.log('item clicked', el)
+//     }
+//   }, false)
+// }
 Fruits.prototype.displaySugarInfo = function(){
-  let elem = this.name;
-  document.getElementById(`btn_${elem}`).addEventListener("click", function(){
-    document.getElementById(`sugar_${elem}`).style.display = (document.getElementById(`sugar_${elem}`).style.display == 'none') ? 'block' : 'none';
-  });
+placeForCards.onclick = function(event) {
+  let buttonSugar = event.target.closest('button');
+  console.log(buttonSugar);
+    if(!buttonSugar){
+      return;
+    }else if(!placeForCards.contains(buttonSugar)){
+      return;
+    }else if(buttonSugar.classList.contains(`sugars_${this.name}`)){
+      document.getElementById(`sugar_${this.name}`).style.display = (document.getElementById(`sugar_${this.name}`).style.display == 'none') ? 'block' : 'none';
+      return;
+    }
+  }
 }
+
+
+
+
+
+
+
 // Création du constructor Legums (Légumineuses)
 function Legums(groupName, name, pricePerKilo, season, healthBenefits=[], country, img, cookingTime){
   Products.call(this, groupName, name, pricePerKilo, season, healthBenefits, country, img);
@@ -107,13 +143,13 @@ const displayProductsAsCards = (anyArr) =>{
             <p class="card-text good-for-health_${item.name}">${item.goodForHealth()}</p>
             <p class="card-text2" id="sugar_${item.name}" style="display:none";></p>
             <p class="d-flex justify-content-between">
-              <button class="btn text-white colored-button" id="btn_${item.name}">En savoir plus</button>
+              <button class="btn text-white colored-button sugars_${item.name}" id="btn_${item.name}">En savoir plus</button>
               <i class="fas fa-2x fa-shopping-cart add-shopping"></i>
             </p>
         </div>
       </div>`;
   }).join('');
-  document.getElementById('placeForCards').innerHTML = result;
+  placeForCards.innerHTML = result;
 }
 displayProductsAsCards(arrOfProducts);
 // Les Prix. Au click sur le panier d'achat de chaque article:
@@ -143,16 +179,18 @@ function countShopping(){
 const displayPrices = () =>{
   let sum = '';
   sum += arrForPrices.reduce((a, b) => a + b, 0);
-  console.log(sum);
+  // console.log(sum);
   return sum;
 }
-for(let i=0; i<arrOfProducts.length; i++){
-  countShopping();
-  if(arrOfProducts[i].groupName == 'fruits'){
-    arrOfProducts[i].countSugar();
-    arrOfProducts[i].displaySugarInfo();
+window.addEventListener('load', function () {
+  for(let i=0; i<arrOfProducts.length; i++){
+    countShopping();
+    if(arrOfProducts[i].groupName == 'fruits'){
+      arrOfProducts[i].countSugar();
+      arrOfProducts[i].displaySugarInfo();
+    }
   }
-}
+})
 // Le bouton voir plus voir moins
 const btnSeeMore = document.getElementById('btn-see-more');
 const legumsClass = document.getElementsByClassName('legums');
