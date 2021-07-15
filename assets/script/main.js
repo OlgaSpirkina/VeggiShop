@@ -32,13 +32,13 @@ Fruits.prototype.countSugar = function(){
   let howMuchSugar = '';
   if(this.sugarLevel <= 10){
     howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très faible en sucre et son impact sur le taut de sucre dans le sang est modéré';
-     return document.getElementById(`sugar_${this.name}`).innerHTML += howMuchSugar;
+     return document.getElementById(`paragraphSugar_${this.name}`).innerHTML += howMuchSugar;
   }else if(this.sugarLevel <= 15){
     howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' il vaut mieux manger ce fruit avec modération, le taut de sucre est assez élevé';
-     return document.getElementById(`sugar_${this.name}`).innerHTML += howMuchSugar;
+     return document.getElementById(`paragraphSugar_${this.name}`).innerHTML += howMuchSugar;
   }else{
     howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très sucré, manger avec modération et combiner avec des éléments contenant des fibres ou de bon gras (comme la beurre de cacahuette par ex.)'
-    return document.getElementById(`sugar_${this.name}`).innerHTML += howMuchSugar;
+    return document.getElementById(`paragraphSugar_${this.name}`).innerHTML += howMuchSugar;
   }
 }
 // Pour afficher les info supplementaire sur le click du bouton
@@ -63,21 +63,23 @@ let placeForCards = document.getElementById('placeForCards');
 //     }
 //   }, false)
 // }
+window.addEventListener('load', function () {
 Fruits.prototype.displaySugarInfo = function(){
 placeForCards.onclick = function(event) {
   let buttonSugar = event.target.closest('button');
   console.log(buttonSugar);
+  console.log(document.getElementById(`paragraphSugar_${this.name}`));
     if(!buttonSugar){
       return;
     }else if(!placeForCards.contains(buttonSugar)){
       return;
     }else if(buttonSugar.classList.contains(`sugars_${this.name}`)){
-      document.getElementById(`sugar_${this.name}`).style.display = (document.getElementById(`sugar_${this.name}`).style.display == 'none') ? 'block' : 'none';
+      document.getElementById(`paragraphSugar_${this.name}`).style.display = (document.getElementById(`paragraphSugar_${this.name}`).style.display == 'none') ? 'block' : 'none';
       return;
     }
   }
 }
-
+})
 
 
 
@@ -141,7 +143,7 @@ const displayProductsAsCards = (anyArr) =>{
             <p class="card-text"><strong class="priceValue mx-1">${item.pricePerKilo}</strong><i class="fas fa-euro-sign"></i></p>
             </div>
             <p class="card-text good-for-health_${item.name}">${item.goodForHealth()}</p>
-            <p class="card-text2" id="sugar_${item.name}" style="display:none";></p>
+            <p class="card-text2" id="paragraphSugar_${item.name}" style="display:none";></p>
             <p class="d-flex justify-content-between">
               <button class="btn text-white colored-button sugars_${item.name}" id="btn_${item.name}">En savoir plus</button>
               <i class="fas fa-2x fa-shopping-cart add-shopping"></i>
@@ -190,7 +192,7 @@ window.addEventListener('load', function () {
       arrOfProducts[i].displaySugarInfo();
     }
   }
-})
+})  
 // Le bouton voir plus voir moins
 const btnSeeMore = document.getElementById('btn-see-more');
 const legumsClass = document.getElementsByClassName('legums');
