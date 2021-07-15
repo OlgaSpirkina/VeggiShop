@@ -107,7 +107,7 @@ const displayProductsAsCards = (anyArr) =>{
             <p class="card-text good-for-health_${item.name}">${item.goodForHealth()}</p>
             <p class="card-text2" id="sugar_${item.name}" style="display:none";></p>
             <p class="d-flex justify-content-between">
-              <a href="#" class="btn text-white colored-button" id="btn_${item.name}">En savoir plus</a>
+              <button class="btn text-white colored-button" id="btn_${item.name}">En savoir plus</button>
               <i class="fas fa-2x fa-shopping-cart add-shopping"></i>
             </p>
         </div>
