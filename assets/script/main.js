@@ -80,8 +80,25 @@ input.addEventListener('keyup', (e) => {
 
 const displayProductsAsCards = (anyArr) =>{
   const result =  anyArr.map((item) => {
-      return `<div class='col-1 m-1'><p>${item.name}</p></div>`;
+      return `<div class="card m-2" style="width: 20rem;">
+        <img class="card-img-top" src="${item.img}" alt="${item.name}">
+        <div class="card-body">
+          <h5 class="card-title">${item.name.toUpperCase()}</h5>
+          <div class="d-flex justify-content-between">
+            <p class="card-text">${item.country}</p>
+            <p class="card-text"><strong class="priceValue mx-1">${item.pricePerKilo}</strong><i class="fas fa-euro-sign"></i></p>
+            </div>
+            <p class="card-text good-for-health_${item.name}"></p>
+            <p class="card-text2" id="sugar_${item.name}" style="display:none";></p>
+            <p class="d-flex justify-content-between">
+              <a href="#" class="btn text-white colored-button" id="btn_${item.name}">En savoir plus</a>
+              <i class="fas fa-2x fa-shopping-cart add-shopping"></i>
+            </p>
+        </div>
+      </div>`;
   }).join('');
   document.getElementById('placeForCards').innerHTML = result;
 }
 displayProductsAsCards(arrOfProducts);
+
+// ${item.goodForHealth()}
