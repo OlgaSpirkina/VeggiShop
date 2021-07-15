@@ -28,8 +28,29 @@ Fruits.prototype = Object.create(Products.prototype);
 // Maintenant je veux que Fruits fait référence à son propre constructor
 Fruits.prototype.constructor = Fruits;
 
+// La nouvelle fonction propre à la class Fruits
+Fruits.prototype.countSugar = function(){
+  let howMuchSugar = '';
+  if(this.sugarLevel <= 10){
+    howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très faible en sucre et son impact sur le taut de sucre dans le sang est modéré';
+     return document.getElementById(`sugar_${this.name}`).innerHTML += howMuchSugar;
+  }else if(this.sugarLevel <= 15){
+    howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' il vaut mieux manger ce fruit avec modération, le taut de sucre est assez élevé';
+     return document.getElementById(`sugar_${this.name}`).innerHTML += howMuchSugar;
+  }else{
+    howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très sucré, manger avec modération et combiner avec des éléments contenant des fibres ou de bon gras (comme la beurre de cacahuette par ex.)'
+    return document.getElementById(`sugar_${this.name}`).innerHTML += howMuchSugar;
+  }
+}
+// Pour afficher les info supplementaire sur le click du bouton
+Fruits.prototype.displaySugarInfo = function(){
+  let elem = this.name;
+  document.getElementById(`btn_${elem}`).addEventListener("click", function(){
+    document.getElementById(`sugar_${elem}`).style.display = (document.getElementById(`sugar_${elem}`).style.display == 'none') ? 'block' : 'none';
+  });
+}
 
-// Création du constructor Legums
+// Création du constructor Legums (Légumineuses)
 function Legums(groupName, name, pricePerKilo, season, healthBenefits=[], country, img, cookingTime){
   Products.call(this, groupName, name, pricePerKilo, season, healthBenefits, country, img);
   this.cookingTime = cookingTime;
@@ -134,5 +155,12 @@ const displayPrices = () =>{
   return sum;
 }
 for(let i=0; i<arrOfProducts.length; i++){
+
+}
+for(let i=0; i<arrOfProducts.length; i++){
   countShopping();
+  if(arrOfProducts[i].groupName == 'fruits'){
+    arrOfProducts[i].countSugar();
+    arrOfProducts[i].displaySugarInfo();
+  }
 }
