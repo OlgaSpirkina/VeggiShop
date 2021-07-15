@@ -43,11 +43,26 @@
       </div>
     </header>
     <section class='container-fluid'>
-      <div class='row'>
-        <div class="col-12 d-flex flex-wrap justify-content-center my-5" id='placeForCards'></div>
+      <div class="row">
+        <form class="col-12 d-flex flex-column justify-content-center my-4">
+          <label class="mx-auto text-center my-1" for="searchBar">Rechercher le produit</label>
+          <div class="icon mx-auto d-flex justify-content-end">
+            <i class="fas fa-search"></i>
+          </div>
+          <input class="mx-auto my-3" type="search" id="searchBar" name="searchBar">
+        </form>
       </div>
     </section>
-
+    <section class='container-fluid my-4'>
+      <div class='row'>
+        <div class="col-12 d-flex flex-wrap justify-content-center my-5" id='filterCards'></div>
+        <div class="col-12 d-flex flex-wrap justify-content-center my-5" id='placeForCards'></div>
+        <div class="col-12 d-flex justify-content-center ">
+          <button id="btn-see-more" class="w-25" type="button" name="button">Voir Plus...</button>
+        </div>
+      </div>
+    </section>
+    <footer id="lowerBanner"></footer>
     <!-- Script -->
     <script src="assets/script/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
