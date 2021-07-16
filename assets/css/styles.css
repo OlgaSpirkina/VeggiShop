@@ -10,6 +10,7 @@ html {
   --mainyellow: #efab00;
   --mainbrown: #DABEB2;
   --greenbtn: #9DCC88;
+  --greybtnandicons: #78858b;
   --secondpurple: rgba(130, 126, 154, .9);
   --fonttitle: "Archivo Black", sans-serif;
   --fonttext: "family=Roboto", sans-serif;
@@ -37,7 +38,7 @@ body {
 
 #lowerBanner,
 #banner {
-  min-height: 700px;
+  min-height: 600px;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -103,6 +104,37 @@ label {
   color: var(--deepgreen);
 }
 
+.footer-transparent {
+  width: 100%;
+  margin-top: 20rem;
+  height: 15vh;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#newsletter {
+  width: 20rem;
+  border: 0;
+  background-color: transparent;
+  border-bottom: 1px solid #4f5858;
+  outline: 0;
+  height: 1.5rem;
+  font-size: 1rem;
+}
+
+.greybnt {
+  width: 7vw;
+  font-size: 0.8rem;
+  background-color: var(--greybtnandicons);
+}
+.greybnt:hover {
+  background-color: #8b969b;
+}
+
+.in-footer {
+  color: var(--greybtnandicons);
+  margin: 0 1rem;
+}
+
 @media (min-width: 350px) and (max-width: 699px) {
   .categories {
     margin: 1rem;
@@ -125,6 +157,29 @@ input,
 
   .nav-link {
     font-size: 1rem;
+  }
+
+  .footer-transparent {
+    height: 15rem;
+    flex-direction: column;
+  }
+  .footer-transparent span {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .footer-transparent span button {
+    width: 30%;
+    margin: 0.2rem;
+  }
+
+  #lowerBanner i {
+    scale: 0.9;
+  }
+  #lowerBanner small {
+    font-size: 0.8rem;
+    margin: 0.1rem;
   }
 }
 @media (min-width: 700px) and (max-width: 1250px) {
