@@ -85,25 +85,20 @@ const arrOfProducts = [
   // -le panier de la navbar est visible,
   // -le compteur du panier sur la navbar est activé
   // la somme des prix de tout les articles
-const addPrices = () =>{
-  let priceSpan = document.getElementsByClassName('priceValue');
-  for(let j=0; j<priceSpan.length; j++){
-    priceSpan[j].classList.add('price_'+j);
-    if(priceSpan[j].classList.contains('price_'+j)){
-      console.log(priceSpan[j].innerHTML);
-      arrForPrices.push(parseInt(priceSpan[j].innerHTML));
-      return arrForPrices;
-    }
-  }
-}
 const countShopping = () =>{
   let shoppingIcons = document.getElementsByClassName('add-shopping');
+  let priceValue = document.getElementsByClassName('priceValue');
   for(let i=0; i<shoppingIcons.length; i++){
     shoppingIcons[i].addEventListener('click', function(){
       document.getElementById('number-of-items').style.visibility = 'visible';
       document.getElementById('number-of-items').innerHTML = counter++;
       shoppingIcons[i].classList.add('price_'+i);
-      addPrices();
+      priceValue[i].classList.add('price_'+i);
+      if(shoppingIcons[i].classList.contains('price_'+i) && priceValue[i].classList.contains('price_'+i)){
+        arrForPrices.push(parseFloat(priceValue[i].innerHTML, 10));
+        displayPrices();
+        return arrForPrices;
+      }
     })
   }
 }
@@ -147,12 +142,6 @@ const displayProductsAsCards = (anyArr) =>{
   countShopping();
 }
 displayProductsAsCards(arrOfProducts);
-
-for(let i=0; i<arrOfProducts.length; i++){
-  if(arrOfProducts[i].groupName == 'fruits'){
-    arrOfProducts[i].countSugar();
-  }
-}
 // Le bouton voir plus voir moins
 const btnSeeMore = document.getElementById('btn-see-more');
 const legumsClass = document.getElementsByClassName('legums');
@@ -220,6 +209,8 @@ placeForCards.onclick = function(event) {
       for(let i=0; i<arrOfProducts.length; i++){
         if(buttonSugar.classList.contains(`${arrOfProducts[i].name}`) && document.getElementById(`paragraphSugar_${arrOfProducts[i].name}`).classList.contains(`${arrOfProducts[i].name}`)){
         document.getElementById(`paragraphSugar_${arrOfProducts[i].name}`).style.display = (document.getElementById(`paragraphSugar_${arrOfProducts[i].name}`).style.display == 'none') ? 'block' : 'none';
+        arrOfProducts[i].countSugar(); // permet d'afficher l'info supplementaire sur les fruits
+        // the same thing but with a button cookIt arrOfProducts[i].cookIt();
       }
     }
   }
