@@ -90,6 +90,8 @@ if ($("body").data("title") === "main") {
     let shoppingIcons = document.getElementsByClassName('add-shopping');
     let priceValue = document.getElementsByClassName('priceValue');
     let imageShopping = document.getElementsByClassName('card-img-top');
+    let storeIt = {}
+    let arrForStoredItems = [];
     for(let i=0; i<shoppingIcons.length; i++){
       shoppingIcons[i].addEventListener('click', function(){
         document.getElementById('number-of-items').style.visibility = 'visible';
@@ -97,22 +99,27 @@ if ($("body").data("title") === "main") {
         shoppingIcons[i].classList.add('price_'+i);
         priceValue[i].classList.add('price_'+i);
         imageShopping[i].classList.add('price_'+i);
-        if(shoppingIcons[i].classList.contains('price_'+i) && priceValue[i].classList.contains('price_'+i) && imageShopping[i].classList.contains('price_'+i)){
+        if(shoppingIcons[i].classList.contains('price_'+i) && priceValue[i].classList.contains('price_'+i)){
           arrForPrices.push(parseFloat(priceValue[i].innerHTML, 10));
           displayPrices();
-          let keepImg = '';
           for(let i=0; i<arrOfProducts.length; i++){
             if(imageShopping[i].classList.contains('price_'+i)){
-              keepImg = arrOfProducts[i].img;
-              sessionStorage.setItem("img", keepImg);
-              return keepImg;
-            }
-          }
-          return arrForPrices;
+              storeIt = {
+              	image: arrOfProducts[i].img,
+                text: arrOfProducts[i].name,
+                price: arrOfProducts[i].pricePerKilo
+              }
+              // arrForStoredItems.push(storeIt);
+              console.log(storeIt);
+              return localStorage.setItem("storeObj", JSON.stringify(storeIt));
         }
-      })
+        }
+        }
+          return arrForPrices;
+        })
+      }
     }
-  }
+
   const displayPrices = () =>{
     let sum = 0;
     sum += arrForPrices.reduce((a, b) => a + b, 0);
@@ -234,12 +241,27 @@ if ($("body").data("title") === "main") {
 }
 }else{
   // Session storage
-
-
   const testIt = () =>{
-    document.getElementById('displayIt').src = sessionStorage.getItem('img');
-  //   // document.getElementById('displayIt').innerHTML = "HELLO, "+elem;
+    // const string = localStorage.getItem('storeObj');
+    // const array = JSON.parse(string);
+    // const ul = document.createElement('ul');
+    // let data = '';
+    // for(let i = 0; i < array.length; i++){
+    //   const li = document.createElement('li');
+    //   const text = document.createTextNode(array[i]);
+    //   li.appendChild(text);
+    //   ul.appendChild(li);
+
+
+    var objectJSON = JSON.parse(localStorage.getItem("storeObj"));
+    console.log(typeof objectJSON);
+    document.getElementById('displayIt').innerHTML +=
+    `<div>
+      <img src="${objectJSON.image}" alt="${objectJSON.text}" style="width:20rem"/>
+      <p>${objectJSON.text}</p>
+      <p>Prix: <strong>${objectJSON.price}</strong> euros</p>
+    </div>
+    `
   }
   testIt();
-
 }
