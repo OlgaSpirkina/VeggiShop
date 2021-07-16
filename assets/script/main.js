@@ -1,5 +1,7 @@
 // la div principale
 let placeForCards = document.getElementById('placeForCards');
+const arrForPrices = [];
+let counter = 1;
 // Création du prototype contenant les attributs
 function Products(groupName, name, pricePerKilo, season, healthBenefits=[], country, img){
   this.groupName = groupName;
@@ -38,7 +40,7 @@ Fruits.prototype.countSugar = function(){
     howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' il vaut mieux manger ce fruit avec modération, le taut de sucre est assez élevé';
      return document.getElementById(`paragraphSugar_${this.name}`).innerHTML += howMuchSugar;
   }else{
-    howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très sucré, manger avec modération et combiner avec des éléments contenant des fibres ou de bon gras (comme la beurre de cacahuette par ex.)'
+    howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très sucré, manger avec modération et combiner aux éléments contenant des fibres ou de bon gras (comme la beurre de cacahuette par ex.)'
     return document.getElementById(`paragraphSugar_${this.name}`).innerHTML += howMuchSugar;
   }
 }
@@ -78,6 +80,28 @@ const arrOfProducts = [
   cucomber, pepper, carrots, brocolli, pumpkin,
   darkbeans, chickpeas, lentils, peas, beans
 ];
+// Les Prix. Au click sur le panier d'achat de chaque article:
+  // -le prix est récupéré dans le tableau arrForPrices,
+  // -le panier de la navbar est visible,
+  // -le compteur du panier sur la navbar est activé
+  // la somme des prix de tout les articles
+const displayPrices = () =>{
+  let sum = '';
+  sum += arrForPrices.reduce((a, b) => a + b, 0);
+  console.log(sum);
+  return sum;
+}
+const countShopping = () =>{
+  let shoppingIcons = document.getElementsByClassName('add-shopping');
+  for(let i=0; i<shoppingIcons.length; i++){
+    shoppingIcons[i].addEventListener('click', function(){
+      document.getElementById('number-of-items').style.visibility = 'visible';
+      document.getElementById('number-of-items').innerHTML = counter++;
+      
+    })
+  }
+}
+
 // la bar de recherche
 const input = document.getElementById("searchBar");
 input.addEventListener('keyup', (e) => {
@@ -108,47 +132,15 @@ const displayProductsAsCards = (anyArr) =>{
       </div>`;
   }).join('');
   placeForCards.innerHTML = result;
+  countShopping();
 }
 displayProductsAsCards(arrOfProducts);
-// Les Prix. Au click sur le panier d'achat de chaque article:
-  // -le prix est récupéré dans le tableau arrForPrices,
-  // -le panier de la navbar est visible,
-  // -le compteur du panier sur la navbar est activé
-const arrForPrices = [];
-function countShopping(){
-  let counter = 1;
-  let addShoppingCart = document.getElementsByClassName('add-shopping');
-  let priceValue = document.getElementsByClassName('priceValue');
-  for(let i=0; i<addShoppingCart.length; i++){
-    addShoppingCart[i].addEventListener('click', function(){
-      addShoppingCart[i].classList.add('price_'+i);
-      priceValue[i].classList.add('price_'+i);
-      document.getElementById('number-of-items').style.visibility = 'visible';
-      document.getElementById('number-of-items').innerHTML = counter++;
-      if(addShoppingCart[i].classList.contains('price_'+i) && priceValue[i].classList.contains('price_'+i)){
-        arrForPrices.push(parseFloat(priceValue[i].innerHTML, 10));
-        displayPrices();
-        return arrForPrices;
-      }
-    });
+
+for(let i=0; i<arrOfProducts.length; i++){
+  if(arrOfProducts[i].groupName == 'fruits'){
+    arrOfProducts[i].countSugar();
   }
 }
-// la somme des prix de tout les articles
-const displayPrices = () =>{
-  let sum = '';
-  sum += arrForPrices.reduce((a, b) => a + b, 0);
-  // console.log(sum);
-  return sum;
-}
-window.addEventListener('load', function () {
-  for(let i=0; i<arrOfProducts.length; i++){
-    countShopping();
-    if(arrOfProducts[i].groupName == 'fruits'){
-      arrOfProducts[i].countSugar();
-      // displaySugarInfo(arrOfProducts[i].name);
-    }
-  }
-})
 // Le bouton voir plus voir moins
 const btnSeeMore = document.getElementById('btn-see-more');
 const legumsClass = document.getElementsByClassName('legums');
@@ -208,7 +200,6 @@ for(let i=0; i<btnCategories.length; i++){
 // se fait dans la fonction prototype, mais l'affichage avec un event listener du parent global la div #placeForCards
 placeForCards.onclick = function(event) {
   let buttonSugar = event.target.closest('button');
-  console.log(buttonSugar);
     if(!buttonSugar){
       return;
     }else if(!placeForCards.contains(buttonSugar)){
