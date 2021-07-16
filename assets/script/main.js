@@ -85,11 +85,16 @@ const arrOfProducts = [
   // -le panier de la navbar est visible,
   // -le compteur du panier sur la navbar est activé
   // la somme des prix de tout les articles
-const displayPrices = () =>{
-  let sum = '';
-  sum += arrForPrices.reduce((a, b) => a + b, 0);
-  console.log(sum);
-  return sum;
+const addPrices = () =>{
+  let priceSpan = document.getElementsByClassName('priceValue');
+  for(let j=0; j<priceSpan.length; j++){
+    priceSpan[j].classList.add('price_'+j);
+    if(priceSpan[j].classList.contains('price_'+j)){
+      console.log(priceSpan[j].innerHTML);
+      arrForPrices.push(parseInt(priceSpan[j].innerHTML));
+      return arrForPrices;
+    }
+  }
 }
 const countShopping = () =>{
   let shoppingIcons = document.getElementsByClassName('add-shopping');
@@ -97,11 +102,18 @@ const countShopping = () =>{
     shoppingIcons[i].addEventListener('click', function(){
       document.getElementById('number-of-items').style.visibility = 'visible';
       document.getElementById('number-of-items').innerHTML = counter++;
-      
+      shoppingIcons[i].classList.add('price_'+i);
+      addPrices();
     })
   }
 }
-
+const displayPrices = () =>{
+  let sum = '';
+  sum += arrForPrices.reduce((a, b) => a + b, 0);
+  console.log(sum);
+  return sum;
+}
+displayPrices();
 // la bar de recherche
 const input = document.getElementById("searchBar");
 input.addEventListener('keyup', (e) => {
