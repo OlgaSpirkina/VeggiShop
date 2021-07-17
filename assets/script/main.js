@@ -1,8 +1,9 @@
 if ($("body").data("title") === "main") {
   // la div principale
   let placeForCards = document.getElementById('placeForCards');
+  let shoppingIcons = document.getElementsByClassName('add-shopping');
   const arrForPrices = [];
-  let counter = 1;
+  let counter = 0;
   // Création du prototype contenant les attributs
   function Products(groupName, name, pricePerKilo, season, healthBenefits=[], country, img){
     this.groupName = groupName;
@@ -87,52 +88,46 @@ if ($("body").data("title") === "main") {
     // -le compteur du panier sur la navbar est activé
     // la somme des prix de tout les articles
   const countShopping = () =>{
-    let shoppingIcons = document.getElementsByClassName('add-shopping');
     let priceValue = document.getElementsByClassName('priceValue');
     let imageShopping = document.getElementsByClassName('card-img-top');
     let storeIt = {}
     let arrForStoredItems = [];
+    let shoppingIconsClicksCountArr = new Array(shoppingIcons.length);
     for(let i=0; i<shoppingIcons.length; i++){
+      shoppingIconsClicksCountArr[i] = 0;
       shoppingIcons[i].addEventListener('click', function(){
+        shoppingIcons[i].textContent = ++shoppingIconsClicksCountArr[i];
         document.getElementById('number-of-items').style.visibility = 'visible';
-        document.getElementById('number-of-items').innerHTML = counter++;
+        document.getElementById('number-of-items').innerHTML = ++counter;
         shoppingIcons[i].classList.add('price_'+i);
         priceValue[i].classList.add('price_'+i);
         imageShopping[i].classList.add('price_'+i);
         if(shoppingIcons[i].classList.contains('price_'+i) && priceValue[i].classList.contains('price_'+i)){
           arrForPrices.push(parseFloat(priceValue[i].innerHTML, 10));
           displayPrices();
-          for(let i=0; i<arrOfProducts.length; i++){
             if(imageShopping[i].classList.contains('price_'+i)){
-              storeIt = {
-              	image: arrOfProducts[i].img,
+              arrForStoredItems.push(  {
+                count: shoppingIcons[i].textContent,
+                image: arrOfProducts[i].img,
                 text: arrOfProducts[i].name,
-                price: arrOfProducts[i].pricePerKilo
-              }
-              // arrForStoredItems.push(storeIt);
-              console.log(storeIt);
-              return localStorage.setItem("storeObj", JSON.stringify(storeIt));
-        }
-        }
+                unityPrice: arrOfProducts[i].pricePerKilo,
+                totalPrice: parseFloat(arrOfProducts[i].pricePerKilo * shoppingIcons[i].textContent)
+              });
+              return localStorage.setItem("storeObj", JSON.stringify(arrForStoredItems));
+            }
         }
           return arrForPrices;
         })
       }
     }
-
   const displayPrices = () =>{
     let sum = 0;
     sum += arrForPrices.reduce((a, b) => a + b, 0);
     sessionStorage.setItem("sum", sum);
-    console.log(typeof sum);
+    // console.log(typeof sum);
     return sum;
   }
   displayPrices();
-  // sauvegarder les images et les noms des produits sélectionnés
-
-
-
-
   // la bar de recherche
   const input = document.getElementById("searchBar");
   input.addEventListener('keyup', (e) => {
@@ -239,29 +234,57 @@ if ($("body").data("title") === "main") {
       }
     }
 }
+// les fonctions qui concernent la page 'cart.html'
 }else{
   // Session storage
   const testIt = () =>{
-    // const string = localStorage.getItem('storeObj');
-    // const array = JSON.parse(string);
-    // const ul = document.createElement('ul');
-    // let data = '';
-    // for(let i = 0; i < array.length; i++){
-    //   const li = document.createElement('li');
-    //   const text = document.createTextNode(array[i]);
-    //   li.appendChild(text);
-    //   ul.appendChild(li);
-
-
+// récupérer l'objet sauvegardé sur localStorage en format string et le transformer en objet avec JSON.parse
     var objectJSON = JSON.parse(localStorage.getItem("storeObj"));
-    console.log(typeof objectJSON);
-    document.getElementById('displayIt').innerHTML +=
-    `<div>
-      <img src="${objectJSON.image}" alt="${objectJSON.text}" style="width:20rem"/>
-      <p>${objectJSON.text}</p>
-      <p>Prix: <strong>${objectJSON.price}</strong> euros</p>
-    </div>
-    `
-  }
+    // console.log(objectJSON);
+// la fonction qui permet d'éliminer les doublons des objets
+    function getUniqueListBy(arr, key) {
+      return [...new Map(arr.map(item => [item[key], item])).values()] // s'il y a des doublons un seul sera sauvegarder
+    }
+    const unique = getUniqueListBy(objectJSON, 'text'); // la clé pour faire la comparaison c'est le 'text'
+    for(let i=0; i<unique.length; i++){
+      document.getElementById('displayIt').innerHTML +=
+      `<div >
+        <img src="${unique[i].image}" alt="${unique[i].text}" style="width:20rem"/>
+        <p>${unique[i].text}</p>
+        <p>Prix à l'unité: ${unique[i].unityPrice} euros</p>
+        <p>Prix total: <strong>${unique[i].totalPrice}</strong> euros</p>
+        <p>Quantité: <span><i class="fas fa-minus mx-2"></i></span><strong class="${unique[i].text}_${unique[i].unityPrice}">${unique[i].count}</strong><i class="fas fa-plus mx-2"></i><span></span></p>
+      </div>
+      `
+      }
+      const minus = document.getElementsByClassName('fa-minus');
+      for(let i=0; i<minus.length; i++){
+        minus[i].addEventListener('click', function(){
+          let quantity = document.getElementsByClassName(`${unique[i].text}_${unique[i].unityPrice}`);
+          for(j=0; j<quantity.length; j++){
+            console.log(quantity[j].innerHTML);
+            let oldQuantity = quantity[j].innerHTML;
+            let newQuantity = oldQuantity - 1;
+            if(quantity[j].innerHTML == 0){
+              return
+            }
+              return quantity[j].innerHTML = newQuantity;
+
+          }
+        })
+      }
+      const plus = document.getElementsByClassName('fa-plus');
+      for(let i=0; i<plus.length; i++){
+        plus[i].addEventListener('click', function(){
+          let quantity = document.getElementsByClassName(`${unique[i].text}_${unique[i].unityPrice}`);
+          for(j=0; j<quantity.length; j++){
+            console.log(quantity[j].innerHTML);
+            let oldquantity = parseFloat(quantity[j].innerHTML);
+            let newquantity = oldquantity + 1;
+            return quantity[j].innerHTML = newquantity;
+          }
+        })
+      }
+    }
   testIt();
 }
