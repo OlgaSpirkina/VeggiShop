@@ -241,47 +241,6 @@ if ($("body").data("title") === "main") {
       </div>
       `
       }
-      displayIt.onclick = function(event) {
-        let minusPlus = event.target.closest('i');
-        let deleteIt = event.target.closest('small');
-        if(!minusPlus && !deleteIt){
-          return;
-        }else if(!displayIt.contains(minusPlus) && !displayIt.contains(deleteIt)){
-          return;
-        }else if(displayIt.contains(minusPlus)){
-          const minus = document.getElementsByClassName('fa-minus');
-          const plus = document.getElementsByClassName('fa-plus');
-          for(i=0; i<unique.length; i++){
-          let quantity = document.getElementsByClassName(`${unique[i].text}_${unique[i].unityPrice}`);
-          for(j=0; j<quantity.length; j++){
-            if(minus){
-              for(let a=0; a<minus.length; a++){
-                let oldQuantity = quantity[a].innerHTML;
-                let newQuantity = oldQuantity - 1;
-                if(quantity[a].innerHTML == 0){
-                  return
-                }
-                return quantity[a].innerHTML = newQuantity;
-              }
-            }else if(plus){
-              for(let b=0; b<plus.length; b++){
-                let oldquantity = parseFloat(quantity[b].innerHTML);
-                let newquantity = oldquantity + 1;
-                return quantity[b].innerHTML = newquantity;
-              }
-            }
-          }
-        }
-      }else if(displayIt.contains(deleteIt)){
-        for(let i=0; i<unique.length; i++){
-          document.getElementById(`${unique[i].text}`).style.display = "none";
-        }
-      }
     }
-}
-
-
-
-
   testIt();
 }
