@@ -29,13 +29,13 @@ if ($("body").data("title") === "main") {
     let howMuchSugar = '';
     if(this.sugarLevel <= 10){
       howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très faible en sucre et son impact sur le taut de sucre dans le sang est modéré';
-       return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += howMuchSugar;
+       return document.getElementById(`paragraphInfo_${this.name}`).innerHTML = howMuchSugar;
     }else if(this.sugarLevel <= 15){
       howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' il vaut mieux manger ce fruit avec modération, le taut de sucre est assez élevé';
-       return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += howMuchSugar;
+       return document.getElementById(`paragraphInfo_${this.name}`).innerHTML = howMuchSugar;
     }else{
       howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très sucré, manger avec modération et combiner aux éléments contenant des fibres ou de bon gras (comme la beurre de cacahuette par ex.)'
-      return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += howMuchSugar;
+      return document.getElementById(`paragraphInfo_${this.name}`).innerHTML = howMuchSugar;
     }
   }
   // Création du constructor Légumes
@@ -56,7 +56,7 @@ if ($("body").data("title") === "main") {
       li.appendChild(listText);
       unorderedList.appendChild(li);
     })
-    return document.getElementById(`paragraphInfo_${this.name}`).appendChild(unorderedList);
+    return document.getElementById(`paragraphInfo_${this.name}`).innerHTML = unorderedList.innerHTML;
   }
   // Création du constructor Legums (Légumineuses)
   function Legums(groupName, name, pricePerKilo, season, country, img, cookingTime){
@@ -68,7 +68,7 @@ if ($("body").data("title") === "main") {
   Legums.prototype.cookIt = function(){
     let timeOfCooking = '';
     this.cookingTime > 30 ? timeOfCooking = ('Soyez pas pressés! le temps de préparation de ' + this.name + ' est long: ' + this.cookingTime + ' min') : timeOfCooking = (this.name + ' se cuit en '+ this.cookingTime + ' min');
-    return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += timeOfCooking;
+    return document.getElementById(`paragraphInfo_${this.name}`).innerHTML = timeOfCooking;
   }
   // Fruits
   const peach = new Fruits('fruits', 'peche', 4.5, 'l\'été', 'France', 'assets/img/peach.jpg', 16);
@@ -195,21 +195,25 @@ if ($("body").data("title") === "main") {
       }else if(!placeForCards.contains(buttonInfo) && !placeForCards.contains(iconShopping)){
         return;
       }else if(placeForCards.contains(buttonInfo)){
-        for(let i=0; i<arrOfProducts.length; i++){
-          if(buttonInfo.classList.contains(`${arrOfProducts[i].name}`) && document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).classList.contains(`${arrOfProducts[i].name}`)){
-// Afficher des infos supplementaire sur les fruits, légumes et légumineuses
-            if(arrOfProducts[i].groupName == 'fruits'){
-              document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display = (document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display == 'none') ? 'block' : 'none';
-              arrOfProducts[i].countSugar();
-            }else if(arrOfProducts[i].groupName == 'vegetables'){
-              document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display = (document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display == 'none') ? 'block' : 'none';
-              arrOfProducts[i].goodForHealth();
-            }else if(arrOfProducts[i].groupName == 'legums'){
-              document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display = (document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display == 'none') ? 'block' : 'none';
-              arrOfProducts[i].cookIt();
-            }
-        }
-      }
+        arrOfProducts.forEach((item) => {
+          // for(let i=0; i<arrOfProducts.length; i++){
+            if(buttonInfo.classList.contains(`${item.name}`) && document.getElementById(`paragraphInfo_${item.name}`).classList.contains(`${item.name}`)){
+  // Afficher des infos supplementaire sur les fruits, légumes et légumineuses
+              if(item.groupName == 'fruits'){
+                document.getElementById(`paragraphInfo_${item.name}`).style.display = (document.getElementById(`paragraphInfo_${item.name}`).style.display == 'none') ? 'block' : 'none';
+                item.countSugar();
+              }else if(item.groupName == 'vegetables'){
+                document.getElementById(`paragraphInfo_${item.name}`).style.display = (document.getElementById(`paragraphInfo_${item.name}`).style.display == 'none') ? 'block' : 'none';
+                item.goodForHealth();
+              }else if(item.groupName == 'legums'){
+                item.cookIt();
+                document.getElementById(`paragraphInfo_${item.name}`).style.display = (document.getElementById(`paragraphInfo_${item.name}`).style.display == 'none') ? 'block' : 'none';
+              }
+          }
+        // }
+        });
+
+
     // Mettre les produits dans le panier et les afficher sur la page cart.html grâce à localStorage
       }else if(placeForCards.contains(iconShopping)){
         document.getElementById('number-of-items').style.visibility = 'visible'; // le compteur sur la navbar est affiché et activé pour afficher la
