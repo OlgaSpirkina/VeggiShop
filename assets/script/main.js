@@ -232,14 +232,28 @@ if ($("body").data("title") === "main") {
     const unique = getUniqueListBy(objectJSON, 'text'); // la clé pour faire la comparaison c'est le 'text'
     for(let i=0; i<unique.length; i++){
       document.getElementById('displayIt').innerHTML +=
-      `<div id="${unique[i].text}">
-        <img src="${unique[i].image}" alt="${unique[i].text}" style="width:20rem"/>
+      `<div id="maindiv_${unique[i].text}" class="delete_${unique[i].text} m-2 p-2" style="border:1px solid grey">
+        <img src="${unique[i].image}" alt="${unique[i].text}" style="width:15rem"/>
         <p>${unique[i].text}</p>
         <p>Prix à l'unité: ${unique[i].unityPrice} euros</p>
-        <p>Prix total: <strong>${unique[i].totalPrice}</strong> euros</p>
-        <p>Quantité: <span><i class="fas fa-minus mx-2"></i></span><strong class="${unique[i].text}_${unique[i].unityPrice}">${unique[i].count}</strong><i class="fas fa-plus mx-2"></i><span><small>Supprimer</small></span></p>
+        <p id="totalPriceParagraph_${unique[i].text}">Prix total: <strong class="total-price" id="totalPrice_${unique[i].text}">${unique[i].totalPrice}</strong> euros</p>
+        <p>Quantité: <span><i class="fas fa-minus mx-2"></i></span><strong class="${unique[i].text}_${unique[i].unityPrice}">${unique[i].count}</strong><i class="fas fa-plus mx-2"></i><small class="delete_${unique[i].text}">Supprimer</small></p>
       </div>
       `
+      }
+      displayIt.onclick = function(event) {
+        let deleteIt = event.target.closest('small');
+          if(!deleteIt){
+            return;
+          }else if(!displayIt.contains(deleteIt)){
+            return;
+          }else if(displayIt.contains(deleteIt)){
+            for(let i=0; i<unique.length; i++){
+            if(deleteIt.classList.contains(`delete_${unique[i].text}`) && document.getElementById(`maindiv_${unique[i].text}`).classList.contains(`delete_${unique[i].text}`)){
+              document.getElementById(`maindiv_${unique[i].text}`).style.display = 'none';
+            }
+          }
+        }
       }
       const minus = document.getElementsByClassName('fa-minus');
       for(let i=0; i<minus.length; i++){
@@ -249,22 +263,27 @@ if ($("body").data("title") === "main") {
             console.log(quantity[j].innerHTML);
             let oldQuantity = quantity[j].innerHTML;
             let newQuantity = oldQuantity - 1;
+            document.getElementById(`totalPrice_${unique[i].text}`).innerHTML -= `${unique[i].unityPrice}`;
             if(quantity[j].innerHTML == 0){
               return
             }
-              return quantity[j].innerHTML = newQuantity;
-
+            document.getElementById(`totalPrice_${unique[i].text}`).innerHTML <= 0 ? document.getElementById(`totalPriceParagraph_${unique[i].text}`).style.display = "none" : "block";
+            return quantity[j].innerHTML = newQuantity;
           }
         })
       }
       const plus = document.getElementsByClassName('fa-plus');
       for(let i=0; i<plus.length; i++){
         plus[i].addEventListener('click', function(){
+          let parsedUnity = parseFloat(`${unique[i].unityPrice}`, 10);
+          let parsedTotal = parseFloat(document.getElementById(`totalPrice_${unique[i].text}`).innerHTML, 10);
           let quantity = document.getElementsByClassName(`${unique[i].text}_${unique[i].unityPrice}`);
           for(j=0; j<quantity.length; j++){
             console.log(quantity[j].innerHTML);
             let oldquantity = parseFloat(quantity[j].innerHTML);
             let newquantity = oldquantity + 1;
+            document.getElementById(`totalPrice_${unique[i].text}`).innerHTML = (parsedTotal += parsedUnity);
+            document.getElementById(`totalPrice_${unique[i].text}`).innerHTML > 0 ? document.getElementById(`totalPriceParagraph_${unique[i].text}`).style.display = "block" : "none";
             return quantity[j].innerHTML = newquantity;
           }
         })

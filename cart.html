@@ -12,7 +12,7 @@
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Merienda+One&family=Roboto&display=swap" rel="stylesheet">
     <!-- fontawesome script -->
     <script src="https://kit.fontawesome.com/e206f53c0e.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -21,7 +21,7 @@
     <header id="banner" class="container-fluid mb-5">
       <div class="row">
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-          <img class="navbar-brand"src="assets/img/logo.png" alt="logo Veggi Shop" />
+          <img class="navbar-brand"src="assets/img/veggilogo.png" alt="logo Veggi Shop" />
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -31,25 +31,27 @@
                 <a class="nav-link active" href="#">Le panier</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="index.html#banner">A propos</a></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="index.html#companies">Recettes</a></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="index.html#contact-area">Contact</a>
+                <a class="nav-link" href="index.html#banner">Revenir à la boutique</a></a>
               </li>
             </ul>
           </div>
-          <div><i id="number-of-items" class="fas fa-2x fa-shopping-cart shopping-cart-in-navbar"></i></div>
+          <div><i class="fas fa-2x fa-shopping-cart shopping-cart-in-navbar"></i></div>
         </nav>
       </div>
     </header>
     <section class="container-fluid">
       <div class="row">
-        <div id="displayIt"></div>
+        <div class="col-12 d-flex flex-wrap justify-content-center" id="displayIt"></div>
+        <div id="totalSum" class="col-12 d-flex justify-content-center"></div>
       </div>
     </section>
+    <footer>
+      <div>
+        <div>
+          <p class="col-12 text-center">Olga Spirkina &copy; 2021</p>
+        </div>
+      </div>
+    </footer>
     <!-- Script -->
     <script src="assets/script/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

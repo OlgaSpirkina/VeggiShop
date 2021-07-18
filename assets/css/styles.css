@@ -135,6 +135,11 @@ label {
   margin: 0 1rem;
 }
 
+small {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 @media (min-width: 350px) and (max-width: 699px) {
   .categories {
     margin: 1rem;
