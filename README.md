@@ -1,5 +1,5 @@
 # VeggiShop
-Le projet d'une page web permettant de choisir les légumes, fruits et légumineuses. Projet réalisé en JavaScript avec la methode de Orienté Objet. Création d'un constructor prototype et de plusieurs constructors enfants. Il y a de multiples fonctions JavaScript permettant créer et manipuler des elements du DOM aussi bien que de diverses valeurs. 
+Le projet d'une page web permettant de choisir des légumes, fruits et légumineuses. Projet réalisé en JavaScript avec la methode Orienté Objet. Un constructor prototype permet de créer plusieurs constructors enfants possedant chacun sa propre methode. Il y a de multiples fonctions JavaScript permettant de créer et de manipuler des elements DOM aussi bien que de diverses valeurs. 
 
 ![grab-landing-page](https://raw.githubusercontent.com/OlgaSpirkina/VeggiShop/main/assets/img/veggie.gif) 
 
