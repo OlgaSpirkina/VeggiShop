@@ -45,13 +45,18 @@ if ($("body").data("title") === "main") {
   }
   Vegetables.prototype = Object.create(Products.prototype);
   Vegetables.prototype.constructor = Vegetables;
-  // les methodes du prototype est crée à part
+  // La methode qui affiche les bienfaits des légumes
   Vegetables.prototype.goodForHealth = function(){
-    let allBenefits = '';
-    this.healthBenefits.forEach((item, i) => {
-      i == (this.healthBenefits.length - 1) ? allBenefits += item+'.' : allBenefits += item +', ';
+    const unorderedList = document.createElement('ul');
+    const titleText = document.createTextNode('Les bienfait pour la santé: ');
+    unorderedList.appendChild(titleText);
+    this.healthBenefits.forEach(function(item){
+      let li = document.createElement('li');
+      let listText = document.createTextNode(item);
+      li.appendChild(listText);
+      unorderedList.appendChild(li);
     })
-    return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += allBenefits;
+    return document.getElementById(`paragraphInfo_${this.name}`).appendChild(unorderedList);
   }
   // Création du constructor Legums (Légumineuses)
   function Legums(groupName, name, pricePerKilo, season, country, img, cookingTime){
@@ -72,11 +77,11 @@ if ($("body").data("title") === "main") {
   const pineapple = new Fruits('fruits', 'ananas', 3.5, 'all', 'Paraguay', 'assets/img/pineapple.jpg', 16.3);
   const pear = new Fruits('fruits', 'poire', 3.6, 'all', 'France', 'assets/img/pear.jpg', 13.7);
   // Legumes juste comme instances of Products
-  const cucomber = new Vegetables('vegetables', 'concombre', 2.5, 'l\'été', 'France', 'assets/img/cucomber.jpg', ['les intestins', 'le sang', 'le coeur']);
-  const pepper = new Vegetables('vegetables', 'piment', 4.6, 'all', 'France', 'assets/img/pepper.jpg', ['les intestins', 'le coeur', 'les artères']);
-  const carrots = new Vegetables('vegetables', 'carottes', 3.3, 'all', 'France', 'assets/img/carrots.jpg');
-  const brocolli = new Vegetables('vegetables', 'brocolli', 2.1, 'all', 'France', 'assets/img/brocolli.jpg', ['les intestins', 'le sang']);
-  const pumpkin = new Vegetables('vegetables', 'courge', 2.9, 'automn', 'France', 'assets/img/pumpkin.jpg', ['les intestins', 'la peau']);
+  const cucomber = new Vegetables('vegetables', 'concombre', 2.5, 'l\'été', 'France', 'assets/img/cucomber.jpg', ['améliore letransit intestinal', 'calmant naturel', 'vertus diurétiques et drainantes']);
+  const pepper = new Vegetables('vegetables', 'piment', 4.6, 'all', 'France', 'assets/img/pepper.jpg', ['source de vitamine C, B6 et K', 'source de fer, de cuivre, de manganèse', 'les artères']);
+  const carrots = new Vegetables('vegetables', 'carottes', 3.3, 'all', 'France', 'assets/img/carrots.jpg', ['ralenti le vieillissement', 'améliore l\'état de la peau', 'favoriser la cicatrisation']);
+  const brocolli = new Vegetables('vegetables', 'brocoli', 2.1, 'all', 'France', 'assets/img/brocolli.jpg', ['renforce le système immunitaire', 'régule le transit intestinal', 'réduise l\'inflammation']);
+  const pumpkin = new Vegetables('vegetables', 'courge', 2.9, 'automn', 'France', 'assets/img/pumpkin.jpg', ['source de vitamine A', 'améliore certaines fonctions du système immunitaire', 'source de calcium, cuivre, fer']);
   // Légumineuses
   const darkbeans = new Legums('legums', 'haricots', 1.5, 'all', 'France', 'assets/img/darkbeans.jpg', 55);
   const chickpeas = new Legums('legums', 'pois-chiche', 1.3, 'all', 'Italie', 'assets/img/chickpeas.jpg', 60);
