@@ -231,6 +231,7 @@ if ($("body").data("title") === "main") {
     }
     const unique = getUniqueListBy(objectJSON, 'text'); // la clé pour faire la comparaison c'est le 'text'
     for(let i=0; i<unique.length; i++){
+      let sum = [];
       document.getElementById('displayIt').innerHTML +=
       `<div id="maindiv_${unique[i].text}" class="delete_${unique[i].text} m-2 p-2" style="border:1px solid grey">
         <img src="${unique[i].image}" alt="${unique[i].text}" style="width:15rem"/>
@@ -240,7 +241,7 @@ if ($("body").data("title") === "main") {
         <p>Quantité: <span><i class="fas fa-minus mx-2"></i></span><strong class="${unique[i].text}_${unique[i].unityPrice}">${unique[i].count}</strong><i class="fas fa-plus mx-2"></i><small class="delete_${unique[i].text}">Supprimer</small></p>
       </div>
       `
-      }
+    }
       displayIt.onclick = function(event) {
         let deleteIt = event.target.closest('small');
           if(!deleteIt){
@@ -261,9 +262,9 @@ if ($("body").data("title") === "main") {
           let quantity = document.getElementsByClassName(`${unique[i].text}_${unique[i].unityPrice}`);
           for(j=0; j<quantity.length; j++){
             console.log(quantity[j].innerHTML);
-            let oldQuantity = quantity[j].innerHTML;
+            let oldQuantity = parseFloat(quantity[j].innerHTML);
             let newQuantity = oldQuantity - 1;
-            document.getElementById(`totalPrice_${unique[i].text}`).innerHTML -= `${unique[i].unityPrice}`;
+            document.getElementById(`totalPrice_${unique[i].text}`).innerHTML = parseFloat(document.getElementById(`totalPrice_${unique[i].text}`).innerHTML - `${unique[i].unityPrice}`).toFixed(1);
             if(quantity[j].innerHTML == 0){
               return
             }
@@ -282,12 +283,25 @@ if ($("body").data("title") === "main") {
             console.log(quantity[j].innerHTML);
             let oldquantity = parseFloat(quantity[j].innerHTML);
             let newquantity = oldquantity + 1;
-            document.getElementById(`totalPrice_${unique[i].text}`).innerHTML = (parsedTotal += parsedUnity);
+            // newquantity =
+            document.getElementById(`totalPrice_${unique[i].text}`).innerHTML = parseFloat(parsedTotal += parsedUnity).toFixed(1);
             document.getElementById(`totalPrice_${unique[i].text}`).innerHTML > 0 ? document.getElementById(`totalPriceParagraph_${unique[i].text}`).style.display = "block" : "none";
             return quantity[j].innerHTML = newquantity;
           }
         })
       }
+      window.addEventListener('load', function () {
+        let everySum = () =>{
+        const totalPrice = document.getElementsByClassName('total-price');
+        for(let j=0; j<totalPrice.length; j++){
+          let sumIt = 0;
+          sumIt += parseFloat(totalPrice[j].innerHTML, 10);
+          console.log(parseFloat(totalPrice[j].innerHTML, 10));
+          }
+        }
+
+        everySum();
+      })
     }
   testIt();
 }
