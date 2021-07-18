@@ -110,8 +110,8 @@ if ($("body").data("title") === "main") {
                 count: shoppingIcons[i].textContent,
                 image: arrOfProducts[i].img,
                 text: arrOfProducts[i].name,
-                unityPrice: arrOfProducts[i].pricePerKilo,
-                totalPrice: parseFloat(arrOfProducts[i].pricePerKilo * shoppingIcons[i].textContent)
+                unityPrice: parseFloat(arrOfProducts[i].pricePerKilo, 10),
+                totalPrice: arrOfProducts[i].pricePerKilo * parseFloat(shoppingIcons[i].textContent, 10)
               });
               return localStorage.setItem("storeObj", JSON.stringify(arrForStoredItems));
             }
@@ -152,15 +152,15 @@ if ($("body").data("title") === "main") {
               <p class="card-text2 ${item.name}" id="paragraphSugar_${item.name}" style="display:none";></p>
               <p class="d-flex justify-content-between">
                 <button class="btn text-white colored-button ${item.name}" id="btn_${item.name}">En savoir plus</button>
-                <i class="fas fa-2x fa-shopping-cart add-shopping"></i>
+                <i id="${item.name}" class="fas fa-2x fa-shopping-cart add-shopping"></i>
               </p>
           </div>
         </div>`;
     }).join('');
     placeForCards.innerHTML = result;
-    countShopping();
   }
   displayProductsAsCards(arrOfProducts);
+
   // Le bouton voir plus voir moins
   const btnSeeMore = document.getElementById('btn-see-more');
   const legumsClass = document.getElementsByClassName('legums');
@@ -209,13 +209,16 @@ if ($("body").data("title") === "main") {
             return (eachCategory.groupName.toLowerCase().includes(buttonId));
           });
           displayProductsAsCards(categoryFilter);
+          countShopping();
         }else if(buttonId == 'all'){
           document.getElementById('btn-see-more').style.display = 'block';
           displayProductsAsCards(arrOfProducts);
+          countShopping();
           }
         }
     })
   }
+  countShopping();
   // la fonction qui permet de montrer les info sur le taut de sucre. Le calcule du taut de sucre
   // se fait dans la fonction prototype, mais l'affichage avec un event listener du parent global la div #placeForCards
   placeForCards.onclick = function(event) {
