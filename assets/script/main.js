@@ -241,6 +241,34 @@ if ($("body").data("title") === "main") {
       </div>
       `
       }
+      const minus = document.getElementsByClassName('fa-minus');
+      for(let i=0; i<minus.length; i++){
+        minus[i].addEventListener('click', function(){
+          let quantity = document.getElementsByClassName(`${unique[i].text}_${unique[i].unityPrice}`);
+          for(j=0; j<quantity.length; j++){
+            console.log(quantity[j].innerHTML);
+            let oldQuantity = quantity[j].innerHTML;
+            let newQuantity = oldQuantity - 1;
+            if(quantity[j].innerHTML == 0){
+              return
+            }
+              return quantity[j].innerHTML = newQuantity;
+
+          }
+        })
+      }
+      const plus = document.getElementsByClassName('fa-plus');
+      for(let i=0; i<plus.length; i++){
+        plus[i].addEventListener('click', function(){
+          let quantity = document.getElementsByClassName(`${unique[i].text}_${unique[i].unityPrice}`);
+          for(j=0; j<quantity.length; j++){
+            console.log(quantity[j].innerHTML);
+            let oldquantity = parseFloat(quantity[j].innerHTML);
+            let newquantity = oldquantity + 1;
+            return quantity[j].innerHTML = newquantity;
+          }
+        })
+      }
     }
   testIt();
 }
