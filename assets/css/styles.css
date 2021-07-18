@@ -135,7 +135,7 @@ label {
   margin: 0 1rem;
 }
 
-small {
+.small {
   text-decoration: underline;
   cursor: pointer;
 }

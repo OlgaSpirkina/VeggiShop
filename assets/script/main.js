@@ -6,26 +6,17 @@ if ($("body").data("title") === "main") {
   let arrForStoredItems = [];
   let counter = 0;
   // Création du prototype contenant les attributs
-  function Products(groupName, name, pricePerKilo, season, healthBenefits=[], country, img){
+  function Products(groupName, name, pricePerKilo, season, country, img){
     this.groupName = groupName;
     this.name = name;
     this.pricePerKilo = pricePerKilo;
     this.season = season;
-    this.healthBenefits = healthBenefits;
     this.country = country;
     this.img = img;
   };
-  // les methodes du prototype est crée à part
-  Products.prototype.goodForHealth = function(){
-    let allBenefits = '';
-    this.healthBenefits.forEach((item, i) => {
-      i == (this.healthBenefits.length - 1) ? allBenefits += item+'.' : allBenefits += item +', ';
-    })
-    return allBenefits;
-  }
   // Création d'un nouveau constructeur Fruits qui hérite du Products
-  function Fruits(groupName, name, pricePerKilo, season, healthBenefits=[], country, img, sugarLevel){
-    Products.call(this, groupName, name, pricePerKilo, season, healthBenefits, country, img);
+  function Fruits(groupName, name, pricePerKilo, season, country, img, sugarLevel){
+    Products.call(this, groupName, name, pricePerKilo, season, country, img);
     this.sugarLevel = sugarLevel;
   }
   // La nouvelle class Fruits hérite des méthodes définies dans le prototype de Products().
@@ -38,45 +29,60 @@ if ($("body").data("title") === "main") {
     let howMuchSugar = '';
     if(this.sugarLevel <= 10){
       howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très faible en sucre et son impact sur le taut de sucre dans le sang est modéré';
-       return document.getElementById(`paragraphSugar_${this.name}`).innerHTML += howMuchSugar;
+       return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += howMuchSugar;
     }else if(this.sugarLevel <= 15){
       howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' il vaut mieux manger ce fruit avec modération, le taut de sucre est assez élevé';
-       return document.getElementById(`paragraphSugar_${this.name}`).innerHTML += howMuchSugar;
+       return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += howMuchSugar;
     }else{
       howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très sucré, manger avec modération et combiner aux éléments contenant des fibres ou de bon gras (comme la beurre de cacahuette par ex.)'
-      return document.getElementById(`paragraphSugar_${this.name}`).innerHTML += howMuchSugar;
+      return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += howMuchSugar;
     }
   }
+  // Création du constructor Légumes
+  function Vegetables(groupName, name, pricePerKilo, season, country, img, healthBenefits=[]){
+    Products.call(this, groupName, name, pricePerKilo, season, country, img);
+    this.healthBenefits = healthBenefits;
+  }
+  Vegetables.prototype = Object.create(Products.prototype);
+  Vegetables.prototype.constructor = Vegetables;
+  // les methodes du prototype est crée à part
+  Vegetables.prototype.goodForHealth = function(){
+    let allBenefits = '';
+    this.healthBenefits.forEach((item, i) => {
+      i == (this.healthBenefits.length - 1) ? allBenefits += item+'.' : allBenefits += item +', ';
+    })
+    return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += allBenefits;
+  }
   // Création du constructor Legums (Légumineuses)
-  function Legums(groupName, name, pricePerKilo, season, healthBenefits=[], country, img, cookingTime){
-    Products.call(this, groupName, name, pricePerKilo, season, healthBenefits, country, img);
+  function Legums(groupName, name, pricePerKilo, season, country, img, cookingTime){
+    Products.call(this, groupName, name, pricePerKilo, season, country, img);
     this.cookingTime = cookingTime;
   }
   Legums.prototype = Object.create(Products.prototype);
   Legums.prototype.constructor = Legums;
   Legums.prototype.cookIt = function(){
     let timeOfCooking = '';
-    this.cookingTime > 30 ? timeOfCooking = 'Soyez pas pressés! le temps de préparation de ' + this.name + ' est long: ' + this.cookingTime + ' min' : timeOfCooking = this.name + ' se cuit en '+ this.cookingTime + ' min';
-    return timeOfCooking;
+    this.cookingTime > 30 ? timeOfCooking = ('Soyez pas pressés! le temps de préparation de ' + this.name + ' est long: ' + this.cookingTime + ' min') : timeOfCooking = (this.name + ' se cuit en '+ this.cookingTime + ' min');
+    return document.getElementById(`paragraphInfo_${this.name}`).innerHTML += timeOfCooking;
   }
   // Fruits
-  const peach = new Fruits('fruits', 'peach', 4.5, 'l\'été', ['gut', 'heart', 'sang'], 'France', 'assets/img/peach.jpg', 16);
-  const cranberry = new Fruits('fruits', 'cranberry', 5, 'all', ['gut', 'immune system', 'heart'], 'Canada', 'assets/img/cranberry.jpg', 4.3);
-  const banana = new Fruits('fruits', 'banana', 1.5, 'all', ['intestins', 'cerveau', 'coeur'], 'République Dominicaine', 'assets/img/banana.jpg', 18.3);
-  const pineapple = new Fruits('fruits', 'ananas', 3.5, 'all', ['intestins', 'system immunitaire'], 'Paraguay', 'assets/img/pineapple.jpg', 16.3);
-  const pear = new Fruits('fruits', 'poire', 3.6, 'all', ['système immunitaire', 'coeur'], 'France', 'assets/img/pear.jpg', 13.7);
+  const peach = new Fruits('fruits', 'peche', 4.5, 'l\'été', 'France', 'assets/img/peach.jpg', 16);
+  const cranberry = new Fruits('fruits', 'cranberry', 5, 'all', 'Canada', 'assets/img/cranberry.jpg', 4.3);
+  const banana = new Fruits('fruits', 'bananes', 1.5, 'all', 'République Dominicaine', 'assets/img/banana.jpg', 18.3);
+  const pineapple = new Fruits('fruits', 'ananas', 3.5, 'all', 'Paraguay', 'assets/img/pineapple.jpg', 16.3);
+  const pear = new Fruits('fruits', 'poire', 3.6, 'all', 'France', 'assets/img/pear.jpg', 13.7);
   // Legumes juste comme instances of Products
-  const cucomber = new Products('vegetables', 'concombre', 2.5, 'l\'été', ['les intestins', 'le sang', 'le coeur'], 'France', 'assets/img/cucomber.jpg');
-  const pepper = new Products('vegetables', 'piment', 4.6, 'all', ['les intestins', 'le coeur', 'les artères'], 'France', 'assets/img/pepper.jpg');
-  const carrots = new Products('vegetables', 'carottes, la botte', 3.3, 'all', ['les intestins', 'la vue', 'la peau'], 'France', 'assets/img/carrots.jpg');
-  const brocolli = new Products('vegetables', 'brocolli', 2.1, 'all', ['les intestins', 'le sang'], 'France', 'assets/img/brocolli.jpg');
-  const pumpkin = new Products('vegetables', 'courge', 2.9, 'automn', ['les intestins', 'la peau'], 'France', 'assets/img/pumpkin.jpg');
+  const cucomber = new Vegetables('vegetables', 'concombre', 2.5, 'l\'été', 'France', 'assets/img/cucomber.jpg', ['les intestins', 'le sang', 'le coeur']);
+  const pepper = new Vegetables('vegetables', 'piment', 4.6, 'all', 'France', 'assets/img/pepper.jpg', ['les intestins', 'le coeur', 'les artères']);
+  const carrots = new Vegetables('vegetables', 'carottes', 3.3, 'all', 'France', 'assets/img/carrots.jpg');
+  const brocolli = new Vegetables('vegetables', 'brocolli', 2.1, 'all', 'France', 'assets/img/brocolli.jpg', ['les intestins', 'le sang']);
+  const pumpkin = new Vegetables('vegetables', 'courge', 2.9, 'automn', 'France', 'assets/img/pumpkin.jpg', ['les intestins', 'la peau']);
   // Légumineuses
-  const darkbeans = new Legums('legums', 'haricots', 1.5, 'all', ['les muscles', 'les intestins'], 'France', 'assets/img/darkbeans.jpg', 55);
-  const chickpeas = new Legums('legums', 'poischiche', 1.3, 'all', ['les muscles', 'les intestins'], 'Italie', 'assets/img/chickpeas.jpg', 60);
-  const lentils = new Legums('legums', 'lentillesvertes', 1.6, 'all', ['les muscles', 'les intestins'], 'France', 'assets/img/lentils.jpg', 20);
-  const peas = new Legums('legums', 'petitpois', 2.3, 'spring', ['le coeur', 'les intestins'], 'Espagne', 'assets/img/peas.jpg', 25);
-  const beans = new Legums('legums', 'haricotsrouges', 1.9, 'all', ['les muscles', 'les intestins'], 'France', 'assets/img/beans.jpg', 60);
+  const darkbeans = new Legums('legums', 'haricots', 1.5, 'all', 'France', 'assets/img/darkbeans.jpg', 55);
+  const chickpeas = new Legums('legums', 'pois-chiche', 1.3, 'all', 'Italie', 'assets/img/chickpeas.jpg', 60);
+  const lentils = new Legums('legums', 'lentilles-vertes', 1.6, 'all', 'France', 'assets/img/lentils.jpg', 20);
+  const peas = new Legums('legums', 'petit-pois', 2.3, 'spring', 'Espagne', 'assets/img/peas.jpg', 25);
+  const beans = new Legums('legums', 'haricots-rouges', 1.9, 'all', 'France', 'assets/img/beans.jpg', 60);
   // le tableau de tout les produits
   const arrOfProducts = [
     peach, cranberry, banana, pineapple, pear,
@@ -94,8 +100,8 @@ if ($("body").data("title") === "main") {
               <p class="card-text">${item.country}</p>
               <p class="card-text"><strong class="priceValue mx-1">${item.pricePerKilo}</strong><i class="fas fa-euro-sign"></i></p>
               </div>
-              <p class="card-text good-for-health_${item.name}">${item.goodForHealth()}</p>
-              <p class="card-text2 ${item.name}" id="paragraphSugar_${item.name}" style="display:none";></p>
+              <p class="card-text good-for-health_${item.name}"></p>
+              <p class="card-text2 ${item.name}" id="paragraphInfo_${item.name}" style="display:none"></p>
               <p class="d-flex justify-content-between">
                 <button class="btn text-white colored-button ${item.name}" id="btn_${item.name}">En savoir plus</button>
                 <i id="${item.name}" class="fas fa-2x fa-shopping-cart add-shopping ${item.name}"></i>
@@ -163,35 +169,40 @@ if ($("body").data("title") === "main") {
             return (eachCategory.groupName.toLowerCase().includes(buttonId));
           });
           displayProductsAsCards(categoryFilter);
-          // countShopping();
         }else if(buttonId == 'all'){
           document.getElementById('btn-see-more').style.display = 'block';
           displayProductsAsCards(arrOfProducts);
-          // countShopping();
           }
         }
     })
   }
   // la fonction qui permet de montrer les info sur le taut de sucre et mettre les produits dans le panier.
   // Le calcule du taut de sucre se fait dans la fonction prototype, mais l'affichage avec un event listener du parent global la div #placeForCards
-
   let shoppingIconsClicksCountArr = new Array(shoppingIcons.length);
   for(let i=0; i<shoppingIconsClicksCountArr.length; i++){
     shoppingIconsClicksCountArr[i] = 0;
   }
   placeForCards.onclick = function(event) {
-    let buttonSugar = event.target.closest('button');
+    let buttonInfo = event.target.closest('button');
     let iconShopping = event.target.closest('i');
-      if(!buttonSugar && !iconShopping){
+      if(!buttonInfo && !iconShopping){
         return;
-      }else if(!placeForCards.contains(buttonSugar) && !placeForCards.contains(iconShopping)){
+      }else if(!placeForCards.contains(buttonInfo) && !placeForCards.contains(iconShopping)){
         return;
-      }else if(placeForCards.contains(buttonSugar)){
+      }else if(placeForCards.contains(buttonInfo)){
         for(let i=0; i<arrOfProducts.length; i++){
-          if(buttonSugar.classList.contains(`${arrOfProducts[i].name}`) && document.getElementById(`paragraphSugar_${arrOfProducts[i].name}`).classList.contains(`${arrOfProducts[i].name}`)){
-          document.getElementById(`paragraphSugar_${arrOfProducts[i].name}`).style.display = (document.getElementById(`paragraphSugar_${arrOfProducts[i].name}`).style.display == 'none') ? 'block' : 'none';
-          arrOfProducts[i].countSugar(); // permet d'afficher l'info supplementaire sur les fruits
-          // the same thing but with a button cookIt arrOfProducts[i].cookIt();
+          if(buttonInfo.classList.contains(`${arrOfProducts[i].name}`) && document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).classList.contains(`${arrOfProducts[i].name}`)){
+// Afficher des infos supplementaire sur les fruits, légumes et légumineuses
+            if(arrOfProducts[i].groupName == 'fruits'){
+              document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display = (document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display == 'none') ? 'block' : 'none';
+              arrOfProducts[i].countSugar();
+            }else if(arrOfProducts[i].groupName == 'vegetables'){
+              document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display = (document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display == 'none') ? 'block' : 'none';
+              arrOfProducts[i].goodForHealth();
+            }else if(arrOfProducts[i].groupName == 'legums'){
+              document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display = (document.getElementById(`paragraphInfo_${arrOfProducts[i].name}`).style.display == 'none') ? 'block' : 'none';
+              arrOfProducts[i].cookIt();
+            }
         }
       }
     // Mettre les produits dans le panier et les afficher sur la page cart.html grâce à localStorage
@@ -236,9 +247,9 @@ if ($("body").data("title") === "main") {
       `<div id="maindiv_${unique[i].text}" class="delete_${unique[i].text} m-2 p-2" style="border:1px solid grey">
         <img src="${unique[i].image}" alt="${unique[i].text}" style="width:15rem"/>
         <p>${unique[i].text}</p>
-        <p>Prix à l'unité: ${unique[i].unityPrice} euros</p>
+        <p>Prix au kilo: ${unique[i].unityPrice} euros</p>
         <p id="totalPriceParagraph_${unique[i].text}">Prix total: <strong class="total-price" id="totalPrice_${unique[i].text}">${unique[i].totalPrice}</strong> euros</p>
-        <p>Quantité: <span><i class="fas fa-minus mx-2"></i></span><strong class="${unique[i].text}_${unique[i].unityPrice}">${unique[i].count}</strong><i class="fas fa-plus mx-2"></i><small class="delete_${unique[i].text}">Supprimer</small></p>
+        <p>Quantité: <span><i class="fas fa-minus mx-2"></i></span><strong class="${unique[i].text}_${unique[i].unityPrice}">${unique[i].count}</strong><i class="fas fa-plus mx-2"></i><small class="small delete_${unique[i].text}">Supprimer</small></p>
       </div>
       `
     }
@@ -290,18 +301,18 @@ if ($("body").data("title") === "main") {
           }
         })
       }
-      window.addEventListener('load', function () {
-        let everySum = () =>{
-        const totalPrice = document.getElementsByClassName('total-price');
-        for(let j=0; j<totalPrice.length; j++){
-          let sumIt = 0;
-          sumIt += parseFloat(totalPrice[j].innerHTML, 10);
-          console.log(parseFloat(totalPrice[j].innerHTML, 10));
-          }
-        }
-
-        everySum();
-      })
+// La somme totale du panier
+      // window.addEventListener('load', function () {
+      //   let everySum = () =>{
+      //   const totalPrice = document.getElementsByClassName('total-price');
+      //   for(let j=0; j<totalPrice.length; j++){
+      //     let sumIt = 0;
+      //     sumIt += parseFloat(totalPrice[j].innerHTML, 10);
+      //     console.log(parseFloat(totalPrice[j].innerHTML, 10));
+      //     }
+      //   }
+      //   everySum();
+      // })
     }
   testIt();
 }
