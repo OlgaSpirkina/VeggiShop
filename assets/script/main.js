@@ -31,10 +31,10 @@ if ($("body").data("title") === "main") {
       howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très faible en sucre et son impact sur le taut de sucre dans le sang est modéré';
        return document.getElementById(`paragraphInfo_${this.name}`).innerHTML = howMuchSugar;
     }else if(this.sugarLevel <= 15){
-      howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' il vaut mieux manger ce fruit avec modération, le taut de sucre est assez élevé';
+      howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' il vaut mieux manger ce fruit avec modération car le taut de sucre est assez élevé';
        return document.getElementById(`paragraphInfo_${this.name}`).innerHTML = howMuchSugar;
     }else{
-      howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très sucré, manger avec modération et combiner aux éléments contenant des fibres ou de bon gras (comme la beurre de cacahuette par ex.)'
+      howMuchSugar += (this.name.charAt(0).toUpperCase() + this.name.slice(1)) + ' est très sucré, mangez avec modération et combinez aux éléments contenant des fibres ou de bon gras (comme le beurre de cacahuette par ex.)'
       return document.getElementById(`paragraphInfo_${this.name}`).innerHTML = howMuchSugar;
     }
   }
@@ -48,7 +48,7 @@ if ($("body").data("title") === "main") {
   // La methode qui affiche les bienfaits des légumes
   Vegetables.prototype.goodForHealth = function(){
     const unorderedList = document.createElement('ul');
-    const titleText = document.createTextNode('Les bienfait pour la santé: ');
+    const titleText = document.createTextNode('Les bienfaits pour la santé: ');
     unorderedList.appendChild(titleText);
     this.healthBenefits.forEach(function(item){
       let li = document.createElement('li');
@@ -67,7 +67,7 @@ if ($("body").data("title") === "main") {
   Legums.prototype.constructor = Legums;
   Legums.prototype.cookIt = function(){
     let timeOfCooking = '';
-    this.cookingTime > 30 ? timeOfCooking = ('Soyez pas pressés! le temps de préparation de ' + this.name + ' est long: ' + this.cookingTime + ' min') : timeOfCooking = (this.name + ' se cuit en '+ this.cookingTime + ' min');
+    this.cookingTime > 30 ? timeOfCooking = ('Ne soyez pas pressé! le temps de préparation de ' + this.name + ' est long: ' + this.cookingTime + ' min') : timeOfCooking = (this.name + ' se cuit en '+ this.cookingTime + ' min');
     return document.getElementById(`paragraphInfo_${this.name}`).innerHTML = timeOfCooking;
   }
   // Fruits
